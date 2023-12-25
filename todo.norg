@@ -1,0 +1,13 @@
+* Design Website based Around my Hyprland Theme/Config
+  - ( ) Add about page with info about me
+  - ( ) Add software page for software I've made
+  - ( ) Add setup page for software I use on a daily basis
+  -- ( ) Add image icons with colors based on color scheme
+  -- ( ) Add title bar for navigating across pages that looks like the bar from my config
+* Effects
+  - ( ) Fly-in from different sides
+  - ( ) Fade-in
+  - ( ) Spin-in
+  - ( ) Cursor trail?
+  - ( ) First time clicking on a page should switch workspaces and open a terminal window with the page content
+  -- ( ) After first click should simply switch workspaces

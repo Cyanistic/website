@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import type { Collection, CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const projects: Collection<'projects'> = await getCollection('projects');
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+		<main>
+			<h1>Personal Projects</h1>
+			{
+				projects.map((project: CollectionEntry) => (
+					<div>
+						<a href={project.data.url}>
+							<h2>{project.data.title}</h2>
+							<img src={project.data.image} alt={`${project.data.title}-image`}>
+						</a>
+						<p>{project.body}</p>
+					</div>
+				))
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+
