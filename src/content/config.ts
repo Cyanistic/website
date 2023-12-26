@@ -18,6 +18,7 @@ const projects = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
+    description: z.string().optional(),
     icon: z.string().optional(),
     url: z.string().optional(),
   }),
@@ -27,6 +28,7 @@ const software = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
+    description: z.string().optional(),
     icon: z.string().optional(),
     url: z.string().optional(),
   }),

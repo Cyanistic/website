@@ -18,13 +18,21 @@ const projects: Collection<'projects'> = await getCollection('projects');
 		<Header title={SITE_TITLE} />
 		<main>
 			<h1>Personal Projects</h1>
+			<p>
+				This is a list of projects I have made in my free time to explore my passion as a software developer and solve problems I encounter on a regular basis.
+				I'm almost always working on a project in the background.
+				All of my personal projects are and will always be free software liscened under the GPL or one of its variants (most often GPLv3).
+			</p>
 			{
 				projects.map((project: CollectionEntry) => (
 					<div>
 						<a href={project.data.url}>
 							<h2>{project.data.title}</h2>
-							<img src={project.data.image} alt={`${project.data.title}-image`}>
+							{(project.data.image != null) &&
+								<img src={project.data.image} alt={`${project.data.title}-image`}>
+							} 
 						</a>
+						<h4>{project.data.description}</h2>
 						<p>{project.body}</p>
 					</div>
 				))

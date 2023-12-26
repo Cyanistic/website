@@ -1,4 +1,44 @@
 ---
+import { getCollection } from 'astro:content';
+import type { Collection, CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const software: Collection<'software'> = await getCollection('software');
 ---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+		<main>
+			<h1>Software I Use</h1>
+			<p>
+				This is a list of software that I use on a daily basis. These programs are configured to be as effcient as possible to suit my needs and workflow.
+				My personal configurations for all of these programs can be found <a href="https://codeberg.org/Cyanism/Dotfiles">here</a>. 
+			</p>
+			{
+				software.map((program: any) => (
+					<div>
+						<a href={program.data.url}>
+							<h2>{program.data.title}</h2>
+							{
+								program.data.icon && 
+								(<img width={200} src={program.data.icon} alt={`${program.data.title}-image`}/>)
+							} 
+						</a>
+						<h4>{program.data.description}</h2>
+						<p>{program.body}</p>
+					</div>
+				))
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+
