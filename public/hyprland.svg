@@ -4,6 +4,11 @@
 	viewBox="0 0 515.34 673.26"
 >
 	<defs>
+		<style>
+			.cls-3 {
+				fill: url(#linear-gradient);
+			}
+		</style>
 		<linearGradient
 			id="linear-gradient"
 			x1="8.93"

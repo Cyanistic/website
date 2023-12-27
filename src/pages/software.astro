@@ -1,22 +1,67 @@
 ---
 import { getCollection } from 'astro:content';
-import type { Collection, CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, customSlide } from '../consts';
 
-const software: Collection<'software'> = await getCollection('software');
+const software = await getCollection('software');
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+		div.program{
+			opacity: 0;
+			filter: blur(5px);
+			transition: all 1s;
+		}
+
+		div:nth-child(odd){
+			transform: translateX(-100%);
+		}
+
+		div:nth-child(even){
+			transform: translateX(100%);
+		}
+
+		div.show{
+			opacity: 1;
+			filter: blur(0);
+			transform: translateX(0);
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+		  div.program {
+		    transition: all 1s;
+		  }
+		}
+
+		</style>
+
+		<script defer='true'>
+		function showPrograms(){
+			const observer = new IntersectionObserver(entries => {
+			entries.forEach(e => {
+					console.log(e)
+					if (e.isIntersecting){
+						e.target.classList.add('show');
+					}
+				})
+			})
+
+			const hiddenprograms = document.querySelectorAll('.program');
+			hiddenprograms.forEach(e => observer.observe(e))
+		}
+		showPrograms()
+		document.addEventListener('astro:page-load', showPrograms)
+		</script>
 	</head>
 	<body>
 		<Header title={SITE_TITLE} />
-		<main>
+		<main transition:animate>
 			<h1>Software I Use</h1>
 			<p>
 				This is a list of software that I use on a daily basis. These programs are configured to be as effcient as possible to suit my needs and workflow.
@@ -24,12 +69,12 @@ const software: Collection<'software'> = await getCollection('software');
 			</p>
 			{
 				software.map((program: any) => (
-					<div>
+					<div class="program">
 						<a href={program.data.url}>
 							<h2>{program.data.title}</h2>
 							{
 								program.data.icon && 
-								(<img width={200} src={program.data.icon} alt={`${program.data.title}-image`}/>)
+								(<img height={200} width={200} src={program.data.icon} alt={`${program.data.title}-image`}/>)
 							} 
 						</a>
 						<h4>{program.data.description}</h2>

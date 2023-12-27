@@ -1,6 +1,6 @@
 ---
 title: "Eww"
-icon: "/eww.png"
+icon: "/eww.svg"
 url: "https://github.com/elkowar/eww"
 description: "A standalone custom widget system"
 ---

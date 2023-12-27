@@ -1,6 +1,6 @@
 ---
 title: "Hyprland"
-icon: "/Hyprland.png"
+icon: "/hyprland.svg"
 url: "https://github.com/hyprwm/Hyprland"
 description: ""
 ---
