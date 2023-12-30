@@ -54,12 +54,10 @@ body {
   font-family: "JetBrainsMono", "Atkinson", sans-serif;
   text-align: left;
   height: 100vh;
-  /* background-color: #1a1b26; */
   background-image: url("/bedroom-mountain-view.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  /* background-size: auto 100%; */
   word-wrap: break-word;
   overflow-wrap: break-word;
   overflow: hidden;
@@ -114,9 +112,10 @@ b {
 }
 a {
   text-decoration: none;
+  color: var(--default);
 }
 a:hover {
-  color: var(--accent);
+  color: var(--selected);
 }
 p {
   margin-bottom: 1em;

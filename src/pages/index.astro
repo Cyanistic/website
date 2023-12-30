@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
+import TerminalWindow from '../components/TerminalWindow.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Fragment } from 'astro/jsx-runtime';
 ---
@@ -12,6 +13,7 @@ import { Fragment } from 'astro/jsx-runtime';
 	</head>
 	<body>
 		<Bar title={SITE_TITLE} />
+		<TerminalWindow>
 		<main transition:animate>
 			<h1>
 				Home
@@ -23,6 +25,7 @@ import { Fragment } from 'astro/jsx-runtime';
 				Hello guys welcome to Francis vlog channel, today we have the big homie as a guest. What a gay little man we have here with the little pumper!! 
 			</p>
 		</main>
+		</TerminalWindow>
 	</body>
 </html>
 

@@ -6,7 +6,7 @@
 	div.outer{
 		position: fixed;
 		width: calc(100vw - 20px);
-		height: calc(100% - 96px);
+		height: calc(100% - 92px);
 		overflow-x: hidden;
 		overflow-y: auto;
 		display: flex;
@@ -14,10 +14,12 @@
 		background-color: #1a1b26CC;
 		margin-top: 5px;
 		margin-bottom: 5px;
-		border: 3px solid var(--default);
+		border-color: var(--default);
+		border-width: 3px;
+		border-style: solid;
 		border-radius: 20px;
 	}
 </style>
-<div class="outer">
+<div class="outer" transition:animate="slide">
 	<slot/>
 </div>

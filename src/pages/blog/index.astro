@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
+import TerminalWindow from '../../components/TerminalWindow.astro';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
@@ -87,17 +88,18 @@ const posts = (await getCollection('blog')).sort(
 	</head>
 	<body>
 		<Bar />
-		<main>
-			<h1>
-				Blog
-			</h1>
-			<section>
-				<ul>
-					{
+		<TerminalWindow>
+			<main>
+				<h1>
+					Blog
+				</h1>
+				<section>
+					<ul>
+						{
 						posts.map((post) => (
 							<li>
 								<a href={`/blog/${post.slug}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
+								<img width={720} height={360} src={post.data.heroImage} alt="" />
 									<h4 class="title">{post.data.title}</h4>
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
@@ -105,9 +107,10 @@ const posts = (await getCollection('blog')).sort(
 								</a>
 							</li>
 						))
-					}
-				</ul>
-			</section>
-		</main>
+						}
+					</ul>
+				</section>
+			</main>
+		</TerminalWindow>
 	</body>
 </html>
