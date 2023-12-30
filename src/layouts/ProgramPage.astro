@@ -1,8 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
+import Bar from '../components/Bar.astro';
 import Footer from '../components/Footer.astro';
+import TerminalWindow from '../components/TerminalWindow.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Fragment } from 'astro/jsx-runtime';
 
@@ -78,7 +79,8 @@ const { programs } = Astro.props;
 		</script>
 	</head>
 	<body>
-		<Header title={SITE_TITLE} />
+		<Bar title={SITE_TITLE} />
+		<TerminalWindow>
 		<main transition:animate>
 			<slot />
 			{
@@ -102,7 +104,7 @@ const { programs } = Astro.props;
 				})
 			}
 		</main>
-		<Footer />
+		</TerminalWindow>
 	</body>
 </html>
 
