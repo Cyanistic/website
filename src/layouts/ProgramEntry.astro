@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type Props = CollectionEntry<'program'>;
+
+const program: CollectionEntry<'program'> = Astro.props;
+const { Content } = await program.render();
+---
+
+<div class="program">
+	<a href={program.data.url}>
+		<h2>{program.data.title}</h2>
+		{
+			program.data.icon && 
+			(<img height={200} width={200} src={program.data.icon} alt={`${program.data.title}-image`}/>)
+		} 
+	</a>
+	<h4>{program.data.description}</h4>
+	<Content/>
+</div>
+

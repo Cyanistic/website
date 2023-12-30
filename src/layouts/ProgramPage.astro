@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { Fragment } from 'astro/jsx-runtime';
+
+const { programs } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+		@media (prefers-reduced-motion: no-preference) {
+			div.program{
+				opacity: 0;
+				filter: blur(5px);
+				display: inline-block;
+				margin-top: 2rem;
+				margin-bottom: 2rem;
+				transition: all 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+			}
+
+			div:nth-child(odd){
+				transform: translateX(-100%);
+				img{
+					float: left;
+					padding-right: 1em;
+				}
+			}
+
+			div:nth-child(even){
+				transform: translateX(100%);
+				img{
+					float: right;
+					padding-left: 1em;
+				}
+			}
+
+			img{
+				scale: 1;
+				transition: scale 1s cubic-bezier(0.16, 0.35, 0, 1.15);
+			}
+
+			img:hover(){
+				scale: 1.1;
+			}
+
+		}
+
+		div.show{
+			opacity: 1;
+			filter: blur(0);
+			transform: translateX(0);
+		}
+
+		</style>
+
+		<script defer='true'>
+
+		function showPrograms(){
+			const observer = new IntersectionObserver(entries => {
+			entries.forEach(e => {
+					if (e.isIntersecting){
+						e.target.classList.add('show');
+					}
+				})
+			})
+
+			const hiddenprograms = document.querySelectorAll('.program');
+			hiddenprograms.forEach(e => observer.observe(e))
+		}
+		showPrograms()
+		document.addEventListener('astro:page-load', showPrograms)
+		</script>
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+		<main transition:animate>
+			<slot />
+			{
+				programs.map(async (program: any) => {
+					const { Content } = await program.render();
+					return (
+						
+						<div class="program">
+							<a href={program.data.url}>
+								<h2>{program.data.title}</h2>
+								{
+									program.data.icon && 
+									(<img height={200} width={200} src={program.data.icon} alt={`${program.data.title}-image`}/>)
+								} 
+							</a>
+							<h4>{program.data.description}</h2>
+							<Content />
+						</div>
+
+					)
+				})
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+

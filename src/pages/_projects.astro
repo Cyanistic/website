@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, customSlide } from '../consts';
+
+const projects = await getCollection('projects');
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+		div.project{
+			opacity: 0;
+			filter: blur(5px);
+			transition: all 1s;
+		}
+
+		div:nth-child(odd){
+			transform: translateX(-100%);
+		}
+
+		div:nth-child(even){
+			transform: translateX(100%);
+		}
+
+		div.show{
+			opacity: 1;
+			filter: blur(0);
+			transform: translateX(0);
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+		  div.project {
+		    transition: all 1s;
+		  }
+		}
+
+		</style>
+
+		<script defer='true'>
+		function showProjects(){
+			const observer = new IntersectionObserver(entries => {
+			entries.forEach(e => {
+					console.log(e)
+					if (e.isIntersecting){
+						e.target.classList.add('show');
+					}
+				})
+			})
+
+			const hiddenProjects = document.querySelectorAll('.project');
+			hiddenProjects.forEach(e => observer.observe(e))
+		}
+		document.addEventListener('astro:page-load', showProjects)
+		</script>
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+		<main transition:animate>
+			<h1>Personal Projects</h1>
+			<p>
+				This is a list of projects I have made in my free time to explore my passion as a software developer and solve problems I encounter on a regular basis.
+				I'm almost always working on a project in the background.
+				All of my personal projects are and will always be free software liscened under the GPL or one of its variants (most often GPLv3).
+			</p>
+			{
+				projects.map((project) => (
+					<div class="project">
+						<a href={project.data.url}>
+							<h2>{project.data.title}</h2>
+							{
+								project.data.icon && 
+								(<img height={200} width={200} src={project.data.icon} alt={`${project.data.title}-image`}/>)
+							} 
+						</a>
+						<h4>{project.data.description}</h2>
+						<p>{project.body}</p>
+					</div>
+				))
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+
