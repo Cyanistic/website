@@ -4,16 +4,14 @@ import type { HTMLAttributes } from 'astro/types';
 type Props = HTMLAttributes<'a'>;
 
 // src is the path to an image
-const { href, src, title, class: className, ...props } = Astro.props;
+const { href, title, class: className, ...props } = Astro.props;
 
 const { pathname} = Astro.url;
 const isActive = href === pathname || href === pathname.replace(/\/$/, '');
 ---
 
 <a href={href} title={title} class:list={[className, { active: isActive }]} {...props}>
-	{
-		src? (<img width={20} src={src}/>) : (<slot />)
-	}
+	<slot />
 </a>
 <style>
 	a {
