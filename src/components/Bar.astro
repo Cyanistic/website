@@ -55,7 +55,7 @@ import { SITE_TITLE } from '../consts';
 		color: var(--default);
 		background: var(--default);
 		background-clip: text;
-		font-size: 1em;
+		font-size: clamp(0.8em, 2.5vw, 1.2em);
 	}
 
 	h2 a,
@@ -67,6 +67,7 @@ import { SITE_TITLE } from '../consts';
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		height: 2em;
 	}
 	nav a{
 		padding: 0em 0.5em;
@@ -87,13 +88,14 @@ import { SITE_TITLE } from '../consts';
 	  }
 	}
 	.social-links{
-		display: flex;
-		font-size: 38px;
-		background-color: var(--outer-bg); 
 		clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+		font-size: 38px;
+		font-weight: normal;
+		margin: -1em -0.6em;
+		margin-left: -2em;
 		padding-left: 1em;
-		padding-right: 1em;
-		margin-right: -1em;
+		display: flex;
+		background-color: var(--outer-bg); 
 	}
 	.workspaces{
 		font-size: 38px;
@@ -125,6 +127,21 @@ import { SITE_TITLE } from '../consts';
 	@media (max-width: 720px) {
 		.social-links {
 			display: none;
+		}
+	}
+	@media (max-width: 650px) {
+		h2 {
+			display: none;
+		}
+		.workspaces {
+			clip-path: none;
+			align-items: center;
+			justify-content: space-around;
+			left: 0;
+			width: 100%;
+		}
+		header {
+			background-color: var(--outer-bg);
 		}
 	}
 </style>
