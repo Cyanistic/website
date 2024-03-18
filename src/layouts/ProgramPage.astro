@@ -45,7 +45,7 @@ const { programs } = Astro.props;
 			}
 
 			img:hover{
-				scale: 1.1;
+				scale: 1.075;
 			}
 
 		}
@@ -54,6 +54,10 @@ const { programs } = Astro.props;
 			opacity: 1;
 			filter: blur(0);
 			transform: translateX(0);
+		}
+
+		img{
+			width: clamp(1em, 20vw, 10em);
 		}
 
 		</style>
@@ -91,7 +95,7 @@ const { programs } = Astro.props;
 								<h2>{program.data.title}</h2>
 								{
 									program.data.icon && 
-									(<img height={200} width={200} src={program.data.icon} alt={`${program.data.title}-image`}/>)
+									(<img src={program.data.icon} alt={`${program.data.title}-image`}/>)
 								} 
 							</a>
 							<h4>{program.data.description}</h2>

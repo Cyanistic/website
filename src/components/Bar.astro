@@ -57,12 +57,21 @@ import { SITE_TITLE } from '../consts';
 		background-clip: text;
 		font-size: clamp(0.8em, 2.5vw, 1.2em);
 	}
-
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
 		transition: 1s;
 	}
+	/* a:hover::after{ */
+	/* 	content: attr(data-title); */
+	/* 	color: var(--white); */
+	/* 	position: absolute; */
+	/* 	background: #0f0f17; */
+	/* 	border-radius: 10px; */
+	/* 	top: 5px; */
+	/* 	left: 5px; */
+	/* 	padding: 5px; */
+	/* } */
 	nav {
 		display: flex;
 		align-items: center;
@@ -93,7 +102,7 @@ import { SITE_TITLE } from '../consts';
 		font-weight: normal;
 		margin: -1em -0.6em;
 		margin-left: -2em;
-		padding-left: 1em;
+		padding-left: 0.5em;
 		display: flex;
 		background-color: var(--outer-bg); 
 	}
@@ -102,13 +111,10 @@ import { SITE_TITLE } from '../consts';
 		font-weight: normal;
 		margin: -1em -0.6em;
 		margin-right: -2em;
-		padding-right: 1em;
+		padding-right:0.5em;
 		display: flex;
 		background-color: var(--outer-bg); 
-		clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
-	}
-	.workspaces:after{
-		clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10vw), 0 100%);
+		clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
 	}
 	@media (prefers-reduced-motion: no-preference){
 		h2:hover{

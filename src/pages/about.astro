@@ -10,6 +10,40 @@ import TerminalWindow from '../components/TerminalWindow.astro';
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+		img {
+			border-radius: 100px;
+			border: 2px solid var(--white);
+			float: right;
+		}
+
+
+		@media (prefers-reduced-motion: no-preference) {
+			img{
+				scale: 1;
+				transition: scale 2s cubic-bezier(0.16, 0.35, 0, 1.15);
+			}
+
+			img:hover{
+				scale: 1.1;
+				animation: rotateAnimation 1s ease-in-out 0.3s infinite;
+			}
+
+			@keyframes rotateAnimation{
+				0% {
+					rotate: 0deg;
+				}
+				100% {
+					rotate: 360deg;
+				}
+			}
+		}
+
+
+		h1{
+			padding-bottom: 1em;
+		}
+		</style>
 	</head>
 	<body>
 		<Bar title={SITE_TITLE} />
@@ -18,11 +52,34 @@ import TerminalWindow from '../components/TerminalWindow.astro';
 				<h1>
 					About Me
 				</h1>
+				<a href="https://github.com/Cyanistic">
+					<img src="/me.png" alt="" />
+				</a>
 				<h2>
-					Me when the man and the mcdonalds
+					Cyanistic
 				</h2>
 				<p>
-					Hello guys welcome to Francis vlog channel, today we have the big homie as a guest. What a gay little man we have here with the little pumper!! 
+					<!-- I don't know what to put here but basically I code sometimes. Rust is my language of choice for most of my projects.  -->
+					Hi there! I'm Cyanistic, a software engineer and tech enthusiast living in the US. I'm a 3rd year university student pursuing BS in Computer Science.
+				</p>
+				<p>
+					When it comes to programming, Rust is my language of choice.
+					I love the memory safety features and the concise syntax, which makes it a breeze to write clean and efficient code.
+					I've had the opportunity to work on several projects using Rust, in fact, all of the application listed on the projects page are written in rust.
+					In addition to Rust, I'm also proficient in other languages such as Javascript, Java, and Python.
+					I'm always looking to expand my skill set and learn new technologies, so if you have any recommendations, feel free to share!
+					As a software engineer, I'm passionate about writing high-quality code that is maintainable, scalable, and efficient.
+					I believe in continuous learning and improvement, and I'm always looking for ways to improve my craft.
+				</p>
+				<p>
+
+					When I'm not coding, you can find me gaming on my Linux machine.
+					I'm a fan of rhythm games like Beat Saber, and I also enjoy playing other types of games like strategy and adventure games.
+					I'm also a big fan of free and open-source software.
+					I believe that software should be free and open to everyone, and I'm always happy to contribute to projects that align with these values.
+					If you're looking for a dedicated and detail-oriented software engineer with a passion for Rust and Linux, then you've come to the right place!
+					Feel free to reach out to me through my contact page.
+					I'm always excited to connect with other tech enthusiasts and discuss the latest developments in the world of software engineering.
 				</p>
 			</main>
 		</TerminalWindow>

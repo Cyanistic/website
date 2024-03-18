@@ -10,14 +10,37 @@ import TerminalWindow from '../components/TerminalWindow.astro';
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+		.crypto{
+			text-align: center;
+		}
+		.addresses{
+		}
+		</style>
 	</head>
 	<body>
 		<Bar title={SITE_TITLE} />
 		<TerminalWindow>
 			<main transition:animate="fade">
 				<h1>
-					Hello please donate
+					Donate
 				</h1>
+				<p>
+					If any of my work has helped you consider donating to help a brother out.
+				</p>
+				<div>
+					<h2 style="text-align: center;">
+						Crypto
+					</h2>
+					<p>
+						All crypto I hold is self custody.
+					</p>
+					<p class="addresses">
+						BTC: 
+						<br>
+						XMR: 85Av2R33NXP2G6vgKQKSqXX2pttxzjTnrK82g1ops4HZ68pidaPZPCTTJNiVDknFngYasREXq5wd3Tvog7PFeuoGUhXFDQP
+					</p>
+				</div>
 			</main>
 		</TerminalWindow>
 	</body>

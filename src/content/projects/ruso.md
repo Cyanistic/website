@@ -1,7 +1,7 @@
 ---
 title: "ruso"
-description: "A cross-platform CLI and GUI application to easily modify osu! beatmap parameters."
-image: "/ruso.png"
+description: "A cross-platform CLI and GUI application to easily modify osu! beatmap parameters"
+icon: "/ruso.png"
 url: "https://github.com/Cyanistic/ruso"
 ---
 

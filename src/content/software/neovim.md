@@ -5,4 +5,4 @@ icon: "/neovim.svg"
 description: "The ultimate text editor"
 ---
 
-Of course I use neovim.
+Of course I use neovim. It's a powerful text editor with an established plugin ecosystem and community.
