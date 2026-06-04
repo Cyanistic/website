@@ -2,7 +2,7 @@
 title: "Hyprland"
 icon: "/hyprland.svg"
 url: "https://github.com/hyprwm/Hyprland"
-description: "The tiling Wayland compositor of your dreams"
+description: "A dynamic tiling Wayland compositor with animations, blur, and gestures, built for productivity and beauty"
 ---
 
 A stunning titling Wayland compositor with a rich feature set and tons of configuration options.

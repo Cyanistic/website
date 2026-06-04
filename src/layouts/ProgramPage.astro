@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
 import TerminalWindow from '../components/TerminalWindow.astro';
+import { render } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Fragment } from 'astro/jsx-runtime';
 
@@ -87,7 +88,7 @@ const { programs } = Astro.props;
 			<slot />
 			{
 				programs.map(async (program: any) => {
-					const { Content } = await program.render();
+					const { Content } = await render(program);
 					return (
 						
 						<div class="program">
