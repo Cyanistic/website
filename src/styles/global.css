@@ -73,9 +73,13 @@ body {
 /*   padding: 3em 1em; */
 /* } */
 
+.astro-code {
+  font-size: 16px
+}
+
 main {
-  width: 720px;
-  max-width: calc(100% - 2em);
+  width: 1080px;
+  max-width: calc(100% - 4em);
   margin: auto;
   padding: 3em 1em;
   /* background-color: #1a1b26; */

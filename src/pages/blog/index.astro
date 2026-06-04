@@ -7,7 +7,7 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import TerminalWindow from '../../components/TerminalWindow.astro';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
@@ -16,16 +16,11 @@ const posts = (await getCollection('blog')).sort(
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
-			main {
-				width: 960px;
-			}
 			ul {
 				display: flex;
 				flex-wrap: wrap;
 				gap: 2rem;
 				list-style-type: none;
-				margin: 0;
-				padding: 0;
 			}
 			ul li {
 				width: calc(50% - 1rem);
@@ -34,16 +29,13 @@ const posts = (await getCollection('blog')).sort(
 				text-decoration: none;
 				transition: 0.2s ease;
 			}
-			ul li:first-child {
+			ul li {
 				width: 100%;
 				margin-bottom: 1rem;
-				text-align: center;
+				text-align: start;
 			}
-			ul li:first-child img {
+			ul li img {
 				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
 			}
 			ul li img {
 				margin-bottom: 0.5rem;
@@ -97,7 +89,7 @@ const posts = (await getCollection('blog')).sort(
 						posts.map((post) => (
 							<li>
 								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && <img width={720} height={360} src={post.data.heroImage} alt="" />}
+									{post.data.heroImage && <img width={720} height={360} src={post.data.heroImage} />}
 									<h4 class="title">{post.data.title}</h4>
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
