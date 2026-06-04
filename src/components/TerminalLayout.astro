@@ -1,0 +1,57 @@
+---
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<section class="terminal-section">
+    <div class="section-header">
+        <span class="prompt-symbol">$</span>
+        <h2>{title}</h2>
+        <span class="cursor">█</span>
+    </div>
+    {description && <p class="section-desc">{description}</p>}
+    <slot />
+</section>
+
+<style>
+    .terminal-section {
+        padding: 1.5em 1em;
+    }
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        margin: 0 0 1em;
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid var(--default);
+    }
+    .section-header .prompt-symbol {
+        color: var(--default);
+        font-size: 1.1em;
+    }
+    .section-header h2 {
+        margin: 0;
+        font-size: 1.2em;
+        color: var(--selected);
+    }
+    .cursor {
+        display: inline-block;
+        color: var(--selected);
+        font-size: 1.1em;
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    .section-desc {
+        color: rgb(var(--white));
+        font-size: 0.9em;
+        line-height: 1.6;
+        margin: 0 0 1.5em 0;
+    }
+</style>

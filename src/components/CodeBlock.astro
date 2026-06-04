@@ -1,0 +1,75 @@
+---
+interface Props {
+    code: string;
+    language?: string;
+    filename?: string;
+}
+
+const { code, language, filename } = Astro.props;
+---
+
+<div class="code-block">
+    <div class="code-titlebar">
+        <span class="code-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+        </span>
+        <span class="code-filename">{filename || language || 'code'}</span>
+    </div>
+    <pre><code>{code}</code></pre>
+</div>
+
+<style>
+    .code-block {
+        margin: 1.5em 0;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #1a1b26;
+        border: 1px solid rgba(var(--default), 20%);
+    }
+    .code-titlebar {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        padding: 0.6em 1em;
+        background: #16161e;
+        border-bottom: 1px solid rgba(var(--default), 15%);
+    }
+    .code-dots {
+        display: flex;
+        gap: 5px;
+    }
+    .code-dots .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    .code-dots .dot.red {
+        background: #ff5f57;
+    }
+    .code-dots .dot.yellow {
+        background: #febc2e;
+    }
+    .code-dots .dot.green {
+        background: #28c840;
+    }
+    .code-filename {
+        color: rgb(var(--gray));
+        font-size: 0.75em;
+        font-family: 'JetBrainsMono', monospace;
+    }
+    .code-block pre {
+        margin: 0;
+        padding: 1em 1.2em;
+        overflow-x: auto;
+        font-size: 0.85em;
+    }
+    .code-block code {
+        font-family: 'JetBrainsMono', monospace;
+        color: rgb(var(--white));
+        background: none;
+        padding: 0;
+        border-radius: 0;
+    }
+</style>

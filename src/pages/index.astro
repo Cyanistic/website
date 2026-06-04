@@ -2,30 +2,146 @@
 import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
 import TerminalWindow from '../components/TerminalWindow.astro';
+import TerminalLayout from '../components/TerminalLayout.astro';
+import TerminalCard from '../components/TerminalCard.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { Fragment } from 'astro/jsx-runtime';
+import { getCollection, render } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featuredIds = ['taggy', 'lokr', 'mpdtrackr'];
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+    .filter(p => featuredIds.includes(p.id))
+    .map(p => ({
+        id: p.id,
+        title: p.data.title,
+        description: p.data.description,
+        icon: p.data.icon,
+        url: p.data.url,
+    }));
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Bar title={SITE_TITLE} />
-		<TerminalWindow>
-		<main transition:animate="fade">
-			<h1>
-				Home
-			</h1>
-			<h2>
-				Welcome to my website!
-			</h2>
-			<p>
-				This website is themed around my Hyprland desktop.
-			</p>
-		</main>
-		</TerminalWindow>
-	</body>
-</html>
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+        <style>
+            * {
+                font-family: 'JetBrainsMono', 'Courier New', monospace;
+                font-weight: 600;
+            }
+            .hero {
+                text-align: center;
+                padding: 2em 1em 1.5em;
+            }
+            .hero-prompt {
+                font-size: clamp(1.2em, 3.5vw, 2em);
+                color: var(--selected);
+                font-weight: 700;
+                margin: 0 0 0.8em;
+            }
+            .hero-prompt .prompt-symbol {
+                color: var(--default);
+            }
+            .hero-intro {
+                font-size: clamp(0.85em, 2vw, 1em);
+                color: rgb(var(--white));
+                max-width: 600px;
+                margin: 0 auto 1.5em;
+                line-height: 1.6;
+            }
+            .hero-links {
+                display: flex;
+                gap: 0.8em;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .hero-links a {
+                display: inline-block;
+                padding: 0.4em 1em;
+                border: 1px solid var(--default);
+                color: var(--default);
+                text-decoration: none;
+                font-size: 0.85em;
+                transition: all 0.2s ease;
+            }
+            .hero-links a:hover {
+                background: var(--default);
+                color: #0f0f17;
+            }
+            .card-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1em;
+            }
+            @media (max-width: 700px) {
+                .card-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <Bar title={SITE_TITLE} />
+        <TerminalWindow>
+            <main transition:animate="fade">
+                <section class="hero">
+                    <div class="hero-prompt">
+                        <span class="prompt-symbol">❯ </span>platform tools in rust
+                    </div>
+                    <p class="hero-intro">
+                        Linux enthusiast &amp; Rust developer. I build tools that help other engineers move faster and make fewer mistakes. 
+                        Open source advocate. Hyprland power user.
+                    </p>
+                    <div class="hero-links">
+                        <a href="/projects">~/projects</a>
+                        <a href="/software">~/software</a>
+                        <a href="/blog">~/blog</a>
+                        <a href="/about">~/about</a>
+                    </div>
+                </section>
 
+                <section class="section">
+                    <TerminalLayout title="Featured Projects">
+                        <div class="card-grid">
+                            {featuredProjects.map(async (project) => {
+                                const fullProject = allProjects.find(p => p.id === project.id);
+                                if (!fullProject) return null;
+                                const { Content } = await render(fullProject);
+                                return (
+                                    <TerminalCard
+                                        title={project.title}
+                                        description={project.description ?? ''}
+                                        icon={project.icon}
+                                        url={project.url}
+                                    >
+                                        <Content />
+                                    </TerminalCard>
+                                );
+                            })}
+                        </div>
+                    </TerminalLayout>
+                </section>
+
+                <section class="section">
+                    <TerminalLayout title="Recent Posts">
+                        <div class="card-grid">
+                            {posts.slice(0, 3).map((post) => (
+                                <TerminalCard
+                                    title={post.data.title}
+                                    description={post.data.description}
+                                    date={post.data.pubDate.toLocaleDateString()}
+                                    url={`/blog/${post.id}/`}
+                                    showHint={false}
+                                />
+                            ))}
+                        </div>
+                    </TerminalLayout>
+                </section>
+            </main>
+        </TerminalWindow>
+    </body>
+</html>

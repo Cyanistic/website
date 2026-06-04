@@ -1,15 +1,86 @@
 ---
-import { getCollection } from 'astro:content';
-import ProgramPage from '../layouts/ProgramPage.astro';
+import { getCollection, render } from 'astro:content';
+import TerminalLayout from '../components/TerminalLayout.astro';
+import TerminalCard from '../components/TerminalCard.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from '../components/BaseHead.astro';
+import Bar from '../components/Bar.astro';
+import TerminalWindow from '../components/TerminalWindow.astro';
 
 const projects = await getCollection('projects');
 ---
 
-<ProgramPage programs={projects}>
-			<h1>Personal Projects</h1>
-			<p>
-				This is a list of projects I have made in my free time to explore my passion as a software developer and solve problems I encounter on a regular basis.
-				I'm almost always working on a project in the background.
-				All of my personal projects are and will always be free software liscened under the GPL or one of its variants (most often GPLv3).
-			</p>
-</ProgramPage>
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+        <style>
+            .card-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1em;
+                align-items: stretch;
+            }
+            .card-grid .card-wrapper {
+                display: flex;
+            }
+            .card-grid .card-wrapper {
+                opacity: 0;
+                filter: blur(5px);
+                transform: translateX(-100%);
+                transition: all 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            }
+            .card-grid .card-wrapper:nth-child(even) {
+                transform: translateX(100%);
+            }
+            .card-grid .card-wrapper.show {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateX(0);
+            }
+            @media (max-width: 700px) {
+                .card-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+        <script defer='true' is:inline>
+            function initScrollAnimations() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('show');
+                        }
+                    });
+                });
+                document.querySelectorAll('.card-wrapper').forEach(el => observer.observe(el));
+            }
+            initScrollAnimations();
+            document.addEventListener('astro:page-load', initScrollAnimations);
+        </script>
+    </head>
+    <body>
+        <Bar title={SITE_TITLE} />
+        <TerminalWindow>
+            <main transition:animate="fade">
+                <TerminalLayout title="Projects" description="Personal projects built in my free time to solve problems I encounter. All free software, licensed under GPL or variants.">
+                    <div class="card-grid">
+                        {projects.map(async (project) => {
+                            const { Content } = await render(project);
+                            return (
+                                <TerminalCard
+                                    title={project.data.title}
+                                    description={project.data.description ?? ''}
+                                    icon={project.data.icon}
+                                    url={project.data.url}
+                                >
+                                    <Content />
+                                </TerminalCard>
+                            );
+                        })}
+                    </div>
+                </TerminalLayout>
+            </main>
+        </TerminalWindow>
+    </body>
+</html>

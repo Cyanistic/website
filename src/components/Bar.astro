@@ -50,6 +50,9 @@ import { SITE_TITLE } from '../consts';
 		overflow: hidden;
 	}
 	h2 {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
 		margin: 0;
 		color: var(--default);
 		background: var(--default);
@@ -72,6 +75,7 @@ import { SITE_TITLE } from '../consts';
 	/* 	padding: 5px; */
 	/* } */
 	nav {
+		position: relative;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -129,24 +133,28 @@ import { SITE_TITLE } from '../consts';
 			}
 		}
 	}
-	@media (max-width: 720px) {
-		.social-links {
+	@media (max-width: 900px) {
+		h2 {
 			display: none;
 		}
-	}
-	@media (max-width: 650px) {
-		h2 {
+		.social-links {
 			display: none;
 		}
 		.workspaces {
 			clip-path: none;
-			align-items: center;
 			justify-content: space-around;
-			left: 0;
 			width: 100%;
+			margin: 0;
+			padding: 0;
 		}
 		header {
 			background-color: var(--outer-bg);
+		}
+		nav {
+			padding: 0 0.5em;
+		}
+		.workspaces a {
+			padding: 0 0.4em;
 		}
 	}
 </style>

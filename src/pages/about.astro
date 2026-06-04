@@ -1,87 +1,149 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { Fragment } from 'astro/jsx-runtime';
+
 import TerminalWindow from '../components/TerminalWindow.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-		img {
-			border-radius: 100px;
-			border: 2px solid var(--white);
-			float: right;
-		}
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+        <style>
+            .about-layout {
+                display: flex;
+                gap: 2em;
+                align-items: flex-start;
+                padding: 0 1em 1em;
+            }
+            .about-photo {
+                flex-shrink: 0;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                border: 2px solid var(--white);
+            }
+            .about-photo:hover {
+                scale: 1.05;
+                transition: scale 0.3s ease;
+            }
+            .about-content {
+                flex: 1;
+            }
+            .about-name {
+                color: var(--selected);
+                font-size: 1.5em;
+                margin: 0 0 1em;
+                display: flex;
+                align-items: center;
+                gap: 0.5em;
+            }
+            .about-name .cursor {
+                display: inline-block;
+                color: var(--selected);
+                font-size: 1.1em;
+                animation: blink 1s step-end infinite;
+            }
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+            .about-section {
+                margin-bottom: 1.5em;
+                opacity: 0;
+                filter: blur(5px);
+                transform: translateX(-100%);
+                transition: all 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            }
+            .about-section:nth-child(even) {
+                transform: translateX(100%);
+            }
+            .about-section.show {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateX(0);
+            }
+            .about-section h3 {
+                color: var(--default);
+                font-size: 1em;
+                margin: 0 0 0.5em;
+                padding-bottom: 0.3em;
+                border-bottom: 1px solid rgba(var(--default), 30%);
+            }
+            .about-section p {
+                color: rgb(var(--white));
+                font-size: 0.9em;
+                line-height: 1.6;
+                margin: 0;
+            }
+            .about-section a {
+                color: var(--selected);
+            }
+            @media (max-width: 600px) {
+                .about-layout {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+            }
+        </style>
+        <script defer='true' is:inline>
+            function initScrollAnimations() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('show');
+                        }
+                    });
+                });
+                document.querySelectorAll('.about-section').forEach(el => observer.observe(el));
+            }
+            initScrollAnimations();
+            document.addEventListener('astro:page-load', initScrollAnimations);
+        </script>
+    </head>
+    <body>
+        <Bar title={SITE_TITLE} />
+        <TerminalWindow>
+            <main transition:animate="fade">
+                <div class="about-layout">
+                    <a href="https://github.com/Cyanistic">
+                        <img class="about-photo" src="/me.png" alt="Cyanistic" />
+                    </a>
+                    <div class="about-content">
+                        <h1 class="about-name">Cyanistic<span class="cursor">█</span></h1>
 
+                        <div class="about-section">
+                            <h3>Background</h3>
+                            <p>
+                                Software engineer and tech enthusiast living in the US. Graduated Summa Cum Laude from Florida International University with a B.S. in Computer Science.
+                            </p>
+                        </div>
 
-		@media (prefers-reduced-motion: no-preference) {
-			img{
-				scale: 1;
-				transition: scale 2s cubic-bezier(0.16, 0.35, 0, 1.15);
-			}
+                        <div class="about-section">
+                            <h3>Work</h3>
+                            <p>
+                                Passionate about building platform infrastructure: tools that let other engineers move faster and make fewer mistakes. When it comes to programming, Rust is my language of choice — the memory safety features and concise syntax make it a breeze to write clean, efficient code.
+                            </p>
+                        </div>
 
-			img:hover{
-				scale: 1.1;
-				animation: rotateAnimation 1s ease-in-out 0.3s infinite;
-			}
+                        <div class="about-section">
+                            <h3>Skills</h3>
+                            <p>
+                                Primary: Rust. Also proficient in JavaScript, TypeScript, and Python. Always looking to expand my skill set and learn new technologies.
+                            </p>
+                        </div>
 
-			@keyframes rotateAnimation{
-				0% {
-					rotate: 0deg;
-				}
-				100% {
-					rotate: 360deg;
-				}
-			}
-		}
-
-
-		h1{
-			padding-bottom: 1em;
-		}
-		</style>
-	</head>
-	<body>
-		<Bar title={SITE_TITLE} />
-		<TerminalWindow>
-			<main transition:animate="fade">
-				<h1>
-					About Me
-				</h1>
-				<a href="https://github.com/Cyanistic">
-					<img src="/me.png" alt="" />
-				</a>
-				<h2>
-					Cyanistic
-				</h2>
-				<p>
-					Hi there! I'm Cyanistic, a software engineer and tech enthusiast living in the US. I graduated Summa Cum Laude from Florida International University with a B.S. in Computer Science.
-				</p>
-				<p>
-					When it comes to programming, Rust is my language of choice.
-					I love the memory safety features and the concise syntax, which makes it a breeze to write clean and efficient code.
-					I've had the opportunity to work on several projects using Rust, in fact, all of the application listed on the projects page are written in rust.
-					In addition to Rust, I'm also proficient in other languages such as Javascript, TypeScript, and Python.
-					I'm always looking to expand my skill set and learn new technologies, so if you have any recommendations, feel free to share!
-					As a software engineer, I'm passionate about building platform infrastructure: tools that let other engineers move faster and make fewer mistakes.
-					I believe in continuous learning and improvement, and I'm always looking for ways to improve my craft.
-				</p>
-				<p>
-
-					When I'm not coding, you can find me gaming on my Linux machine.
-					I'm a fan of rhythm games like Beat Saber, and I also enjoy playing other types of games like strategy and adventure games.
-					I'm also a big fan of free and open-source software.
-					I believe that software should be free and open to everyone, and I'm always happy to contribute to projects that align with these values.
-					If you're looking for a dedicated and detail-oriented software engineer with a passion for Rust and Linux, then you've come to the right place!
-					Feel free to reach out to me through my contact page.
-					I'm always excited to connect with other tech enthusiasts and discuss the latest developments in the world of software engineering.
-				</p>
-			</main>
-		</TerminalWindow>
-	</body>
+                        <div class="about-section">
+                            <h3>Interests</h3>
+                            <p>
+                                Gaming on my Linux machine (Beat Saber, strategy games). Hyprland power user. Big fan of free and open-source software — I believe software should be free and open to everyone.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </TerminalWindow>
+    </body>
 </html>
-

@@ -1,3 +1,6 @@
+---
+import Footer from './Footer.astro';
+---
 <style>
 	div.outer{
 		position: fixed;
@@ -19,4 +22,5 @@
 </style>
 <div class="outer" transition:animate="slide">
 	<slot/>
+	<Footer />
 </div>
