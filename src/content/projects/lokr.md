@@ -1,6 +1,7 @@
 ---
 title: "Lokr"
 url: "https://github.com/Cyanistic/lokr"
+icon: "/lokr.png"
 description: "A secure file sharing platform with end-to-end encryption, granular permissions (view/edit, time-limited links), and a minimal registration process, built with Rust + React/TypeScript"
 ---
 

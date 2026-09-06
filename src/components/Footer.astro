@@ -3,42 +3,33 @@ const today = new Date();
 ---
 
 <footer>
-    <div class="footer-line">
-        <span class="prompt-symbol">❯</span>
-        <span>&copy; {today.getFullYear()} Andy Brito. All rights reserved.</span>
-    </div>
-    <div class="social-links">
-        <a href="https://youtube.com/@cyani" target="_blank" title="YouTube">󰗃</a>
-        <a href="https://github.com/Cyanistic" target="_blank" title="GitHub"></a>
-        <a href="https://codeberg.org/Cyanism" target="_blank" title="Codeberg">󰣺</a>
-    </div>
+	<p>&copy; {today.getFullYear()} Andy Brito. All rights reserved.</p>
+	<nav aria-label="Profile links">
+		<a href="https://youtube.com/@cyani">YouTube</a>
+		<a href="https://github.com/Cyanistic">GitHub</a>
+		<a href="https://codeberg.org/Cyanism">Codeberg</a>
+	</nav>
 </footer>
+
 <style>
-    footer {
-        padding: 0em 1em 2em 1em;
-        text-align: center;
-    }
-    .footer-line {
-        color: var(--default);
-        font-size: 0.85em;
-        margin-bottom: 0.5em;
-    }
-    .footer-line .prompt-symbol {
-        color: var(--selected);
-        margin-right: 0.3em;
-    }
-    .social-links {
-        display: flex;
-        justify-content: center;
-        gap: 1em;
-    }
-    .social-links a {
-        text-decoration: none;
-        color: var(--default);
-        font-size: 1.2em;
-        transition: color 0.2s ease;
-    }
-    .social-links a:hover {
-        color: var(--selected);
-    }
+	footer {
+		padding: 1.5rem 1rem 1.8rem;
+		text-align: center;
+	}
+
+	p {
+		margin: 0 0 0.45rem;
+		color: var(--text-muted);
+		font-size: 0.78rem;
+	}
+
+	nav {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	a {
+		font-size: 0.8rem;
+	}
 </style>

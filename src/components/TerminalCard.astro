@@ -1,153 +1,93 @@
 ---
 interface Props {
-    title: string;
-    description: string;
-    icon?: string;
-    url?: string;
-    date?: string;
-    showHint?: boolean;
+	title: string;
+	description: string;
+	icon?: string;
+	url?: string;
+	date?: string;
+	showHint?: boolean;
 }
 
-const { title, description, icon, url, date, showHint = true } = Astro.props;
+const { title, description, icon, url, date } = Astro.props;
 ---
 
 <div class="card-wrapper">
-    <div class="terminal-card" onclick="this.classList.toggle('expanded')">
-        <div class="card-header">
-            {icon && <img class="card-icon" src={icon} alt={`${title} icon`} />}
-            {url ? (
-                <a class="card-title" href={url}>{title}</a>
-            ) : (
-                <span class="card-title">{title}</span>
-            )}
-        </div>
-        {date && <span class="card-date">{date}</span>}
-        <p class="card-desc">{description}</p>
-        <div class="card-full-content">
-            <slot />
-            {showHint && <div class="card-expand-hint">↵ click to collapse</div>}
-        </div>
-        {showHint && (
-            <div class="card-expand-hint-hover">↵ click to expand</div>
-        )}
-    </div>
+	<article class="catalog-item">
+		<header>
+			{icon && <img src={icon} alt="" width="34" height="34" />}
+			<div>
+				{url ? <h2><a href={url}>{title}</a></h2> : <h2>{title}</h2>}
+				{date && <time>{date}</time>}
+			</div>
+		</header>
+		<p class="description">{description}</p>
+		<div class="item-content"><slot /></div>
+	</article>
 </div>
 
 <style>
-    .card-wrapper {
-        position: relative;
-    }
-    .terminal-card {
-        background: rgba(var(--white), 3%);
-        border-left: 3px solid var(--default);
-        padding: 1em;
-        transition: all 0.2s ease;
-        cursor: pointer;
-    }
-    .terminal-card:hover {
-        background: rgba(var(--white), 6%);
-    }
-    .terminal-card.expanded {
-        background: rgba(var(--white), 6%);
-        border-left-color: var(--selected);
-    }
-    .terminal-card.expanded:hover {
-        background: rgba(var(--white), 8%);
-    }
-    .card-header {
-        display: flex;
-        align-items: center;
-        gap: 0.5em;
-        margin-bottom: 0.4em;
-    }
-    .card-icon {
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
-    }
-    .card-title {
-        color: var(--selected);
-        font-weight: 700;
-        font-size: 0.95em;
-    }
-    .card-title a {
-        color: inherit;
-        text-decoration: none;
-    }
-    .card-title a:hover {
-        text-decoration: underline;
-    }
-    .card-date {
-        color: var(--default);
-        font-size: 0.8em;
-        display: block;
-        margin-bottom: 0.4em;
-    }
-    .card-desc {
-        color: rgb(var(--white));
-        line-height: 1.5;
-        margin: 0 0 0.5em 0;
-        font-size: 0.85em;
-    }
-    .card-expand-hint,
-    .card-expand-hint-hover {
-        color: var(--default);
-        font-size: 0.75em;
-        margin-top: 0.3em;
-        transition: opacity 0.2s ease;
-    }
-    .card-expand-hint {
-        display: none;
-    }
-    .terminal-card:hover .card-expand-hint-hover {
-        opacity: 0.5;
-    }
-    .terminal-card.expanded .card-expand-hint {
-        display: block;
-        color: var(--selected);
-    }
-    .terminal-card.expanded .card-expand-hint-hover {
-        display: none;
-    }
-    .card-full-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease;
-    }
-    .terminal-card.expanded .card-full-content {
-        max-height: 800px;
-    }
-    .card-full-content :global(pre),
-    .card-full-content :global(code) {
-        background: rgba(var(--black), 50%);
-        padding: 0.5em;
-        border-radius: 4px;
-        font-size: 0.8em;
-        overflow-x: auto;
-    }
-    .card-full-content :global(p) {
-        margin: 0.8em 0;
-        color: rgb(var(--white));
-        font-size: 0.85em;
-        line-height: 1.5;
-    }
-    .card-full-content :global(p:first-child) {
-        margin-top: 0;
-    }
-    .card-full-content :global(ul),
-    .card-full-content :global(ol) {
-        padding-left: 1.5em;
-        margin: 0.5em 0;
-    }
-    .card-full-content :global(li) {
-        color: rgb(var(--white));
-        font-size: 0.85em;
-        line-height: 1.5;
-    }
-    .card-full-content :global(a) {
-        color: var(--selected);
-    }
-    .card-full-content :global(strong) {
-        color: rgb(var(--white));
-    }
+	.card-wrapper {
+		min-width: 0;
+	}
+
+	.catalog-item {
+		height: 100%;
+		padding: 1rem 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	header {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 0.65rem;
+	}
+
+	img {
+		width: 34px;
+		height: 34px;
+		flex: 0 0 34px;
+		object-fit: contain;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1.05rem;
+	}
+
+	h2 a {
+		color: var(--text-bright);
+		text-decoration: none;
+	}
+
+	h2 a:hover,
+	h2 a:focus-visible {
+		color: var(--focus-companion);
+	}
+
+	time {
+		display: block;
+		margin-top: 0.2rem;
+		color: var(--green);
+		font-size: 0.74rem;
+	}
+
+	.description,
+	.item-content {
+		color: var(--text-muted);
+		font-size: 0.86rem;
+		line-height: 1.55;
+	}
+
+	.description {
+		margin-bottom: 0.7rem;
+	}
+
+	.item-content :global(p) {
+		margin: 0;
+	}
+
+	.item-content :global(a) {
+		color: var(--default);
+	}
 </style>

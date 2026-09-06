@@ -1,43 +1,148 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-type Props = HTMLAttributes<'a'>;
+interface Props extends Omit<HTMLAttributes<'a'>, 'href' | 'title'> {
+	href: string;
+	title: string;
+}
 
-// src is the path to an image
 const { href, title, class: className, ...props } = Astro.props;
-
-const { pathname} = Astro.url;
-const isActive = href === pathname || href === pathname.replace(/\/$/, '');
+const pathname = Astro.url.pathname.length > 1
+	? Astro.url.pathname.replace(/\/$/, '')
+	: Astro.url.pathname;
+const target = href.length > 1 ? href.replace(/\/$/, '') : href;
+const isInternal = href.startsWith('/');
+const isActive = isInternal && (target === '/'
+	? pathname === '/'
+	: pathname === target || pathname.startsWith(`${target}/`));
 ---
 
-<a href={href} title={title} class:list={[className, { active: isActive }]} {...props}>
-	<slot />
+<a
+	href={href}
+	aria-label={title}
+	aria-current={isActive ? 'page' : undefined}
+	class:list={[className, { active: isActive }]}
+	{...props}
+>
+	<span class="bar-icon" aria-hidden="true"><slot /></span>
+	<span class="bar-name" aria-hidden="true">{title}</span>
 </a>
+
 <style>
 	a {
-		display: inline-block;
+		position: relative;
+		display: grid;
+		flex: 0 0 42px;
+		width: 42px;
+		height: 44px;
+		place-items: center;
+		border-radius: 8px;
+		color: var(--default);
 		text-decoration: none;
-		transition: scale 1s cubic-bezier(0.16, 0.35, 0, 1.15);
-		scale: 1;
-	}
-	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
+		transition: color 350ms cubic-bezier(0.16, 0.35, 0, 1.15);
 	}
 
-	@media (prefers-reduced-motion: no-preference){
-		a:hover{
-			--bg-size: 200%;
-			color: transparent;
-			background: linear-gradient(130deg, var(--default), var(--selected), var(--default)) 0 0 / var(--bg-size) 100%;
-			background-clip: text;
-			scale: 1.1;
-			animation: gradientAnimation 1s linear infinite;
+	a::after {
+		position: absolute;
+		bottom: 3px;
+		left: 50%;
+		width: 16px;
+		height: 2px;
+		border-radius: 2px;
+		background: var(--selected);
+		content: "";
+		opacity: 0;
+		transform: translateX(-50%);
+		transition: opacity 350ms cubic-bezier(0.16, 0.35, 0, 1.15);
+	}
+
+	a:hover,
+	a:focus-visible,
+	a.active {
+		color: var(--focus-companion);
+	}
+
+	a.active {
+		color: var(--selected);
+	}
+
+	a.active::after {
+		opacity: 1;
+	}
+
+	a:focus-visible {
+		outline: 2px solid var(--focus-companion);
+		outline-offset: -2px;
+	}
+
+	.bar-icon {
+		display: block;
+		font-size: 30px;
+		font-weight: 400;
+		line-height: 1;
+	}
+
+	.bar-name {
+		position: absolute;
+		z-index: 20;
+		top: calc(100% + 8px);
+		left: 50%;
+		padding: 0.28rem 0.5rem;
+		border: 1px solid var(--default);
+		border-radius: 7px;
+		background: var(--bar-bg);
+		color: var(--text);
+		font-size: 0.75rem;
+		font-weight: 400;
+		line-height: 1.2;
+		opacity: 0;
+		pointer-events: none;
+		transform: translate(-50%, -7px);
+		transition: opacity 350ms cubic-bezier(0.16, 0.35, 0, 1.15), transform 350ms cubic-bezier(0.16, 0.35, 0, 1.15);
+		white-space: nowrap;
+	}
+
+	a:hover .bar-name,
+	a:focus-visible .bar-name {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
+
+	@media (max-width: 620px), (hover: none) and (pointer: coarse) {
+		a {
+		display: flex;
+		flex: 1 1 20%;
+		width: auto;
+		height: 70px;
+		min-width: 0;
+		flex-direction: column;
+		justify-content: center;
+		gap: 2px;
+	}
+
+		a::after {
+			bottom: 3px;
 		}
-		@keyframes gradientAnimation{
-			to {
-				background-position: var(--bg-size) 0;
-			}
+
+		.bar-icon {
+			font-size: 27px;
+		}
+
+		.bar-name {
+			position: static;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			font-size: 0.7rem;
+			line-height: 1;
+			opacity: 1;
+			transform: none;
+			transition: color 350ms cubic-bezier(0.16, 0.35, 0, 1.15);
+		}
+
+		a:hover .bar-name,
+		a:focus-visible .bar-name {
+			transform: none;
 		}
 	}
 </style>

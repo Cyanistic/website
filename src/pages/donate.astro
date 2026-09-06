@@ -1,91 +1,88 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
+import BaseHead from '../components/BaseHead.astro';
 import TerminalLayout from '../components/TerminalLayout.astro';
 import TerminalWindow from '../components/TerminalWindow.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
 <html lang="en">
-    <head>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-        <style>
-            .crypto-section {
-                padding: 0 1em 1em;
-            }
-            .crypto-section h3 {
-                color: var(--default);
-                font-size: 1em;
-                margin: 0 0 0.5em;
-                padding-bottom: 0.3em;
-                border-bottom: 1px solid rgba(var(--default), 30%);
-            }
-            .crypto-section p {
-                color: rgb(var(--white));
-                font-size: 0.9em;
-                line-height: 1.6;
-                margin: 0 0 1.5em;
-            }
-            .crypto-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 1em;
-            }
-            .crypto-card {
-                background: rgba(var(--white), 3%);
-                border-left: 3px solid var(--default);
-                padding: 1em;
-            }
-            .crypto-card .crypto-label {
-                color: var(--selected);
-                font-weight: 700;
-                font-size: 0.95em;
-                margin-bottom: 0.5em;
-            }
-            .crypto-card .crypto-address {
-                color: rgb(var(--white));
-                font-size: 0.8em;
-                word-break: break-all;
-                line-height: 1.5;
-                font-family: 'JetBrainsMono', monospace;
-            }
-            .crypto-card .crypto-note {
-                color: var(--default);
-                font-size: 0.75em;
-                margin-top: 0.5em;
-                font-style: italic;
-            }
-            @media (max-width: 700px) {
-                .crypto-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <Bar title={SITE_TITLE} />
-        <TerminalWindow>
-            <main transition:animate="fade">
-                <TerminalLayout title="Donate" description="If any of my work has helped you, consider donating to help a brother out.">
-                    <div class="crypto-section">
-                        <h3>Crypto</h3>
-                        <p>All crypto I hold is self custody.</p>
-                        <div class="crypto-grid">
-                            <div class="crypto-card">
-                                <div class="crypto-label">BTC</div>
-                                <div class="crypto-address">—</div>
-                                <div class="crypto-note">Bitcoin — peer-to-peer electronic cash</div>
-                            </div>
-                            <div class="crypto-card">
-                                <div class="crypto-label">XMR</div>
-                                <div class="crypto-address">85Av2R33NXP2G6vgKQKSqXX2pttxzjTnrK82g1ops4HZ68pidaPZPCTTJNiVDknFngYasREXq5wd3Tvog7PFeuoGUhXFDQP</div>
-                                <div class="crypto-note">Monero — private, secure, untraceable</div>
-                            </div>
-                        </div>
-                    </div>
-                </TerminalLayout>
-            </main>
-        </TerminalWindow>
-    </body>
+	<head>
+		<BaseHead title={`Donate | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Bar />
+		<TerminalWindow label="Donate">
+			<main>
+				<TerminalLayout title="Donate" description="If any of my work has helped you, consider donating to help a brother out.">
+					<section class="crypto-section">
+						<h2>Crypto</h2>
+						<p>All crypto I hold is self custody.</p>
+						<div class="crypto-grid">
+							<article>
+								<h3>BTC</h3>
+								<code>—</code>
+								<p>Bitcoin, peer-to-peer electronic cash</p>
+							</article>
+							<article>
+								<h3>XMR</h3>
+								<code>85Av2R33NXP2G6vgKQKSqXX2pttxzjTnrK82g1ops4HZ68pidaPZPCTTJNiVDknFngYasREXq5wd3Tvog7PFeuoGUhXFDQP</code>
+								<p>Monero, private, secure, untraceable</p>
+							</article>
+						</div>
+					</section>
+				</TerminalLayout>
+			</main>
+		</TerminalWindow>
+	</body>
 </html>
+
+<style>
+	.crypto-section {
+		max-width: 78ch;
+	}
+
+	.crypto-section > h2 {
+		font-size: 1.2rem;
+	}
+
+	.crypto-section > p {
+		color: var(--text-muted);
+	}
+
+	.crypto-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.5rem;
+	}
+
+	.crypto-grid article {
+		min-width: 0;
+		padding-top: 1rem;
+		border-top: 1px solid var(--rule);
+	}
+
+	.crypto-grid h3 {
+		color: var(--focus-companion);
+		font-size: 1rem;
+	}
+
+	.crypto-grid code {
+		display: block;
+		max-width: 100%;
+		overflow-wrap: anywhere;
+	}
+
+	.crypto-grid p {
+		margin-top: 0.6rem;
+		color: var(--text-muted);
+		font-size: 0.8rem;
+	}
+
+	@media (max-width: 720px) {
+		.crypto-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

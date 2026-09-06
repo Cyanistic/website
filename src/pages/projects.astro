@@ -1,86 +1,56 @@
 ---
 import { getCollection, render } from 'astro:content';
-import TerminalLayout from '../components/TerminalLayout.astro';
-import TerminalCard from '../components/TerminalCard.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
+import TerminalCard from '../components/TerminalCard.astro';
+import TerminalLayout from '../components/TerminalLayout.astro';
 import TerminalWindow from '../components/TerminalWindow.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const projects = await getCollection('projects');
 ---
 
 <!doctype html>
 <html lang="en">
-    <head>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-        <style>
-            .card-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1em;
-                align-items: stretch;
-            }
-            .card-grid .card-wrapper {
-                display: flex;
-            }
-            .card-grid .card-wrapper {
-                opacity: 0;
-                filter: blur(5px);
-                transform: translateX(-100%);
-                transition: all 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-            }
-            .card-grid .card-wrapper:nth-child(even) {
-                transform: translateX(100%);
-            }
-            .card-grid .card-wrapper.show {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateX(0);
-            }
-            @media (max-width: 700px) {
-                .card-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
-        </style>
-        <script defer='true' is:inline>
-            function initScrollAnimations() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('show');
-                        }
-                    });
-                });
-                document.querySelectorAll('.card-wrapper').forEach(el => observer.observe(el));
-            }
-            initScrollAnimations();
-            document.addEventListener('astro:page-load', initScrollAnimations);
-        </script>
-    </head>
-    <body>
-        <Bar title={SITE_TITLE} />
-        <TerminalWindow>
-            <main transition:animate="fade">
-                <TerminalLayout title="Projects" description="Personal projects built in my free time to solve problems I encounter. All free software, licensed under GPL or variants.">
-                    <div class="card-grid">
-                        {projects.map(async (project) => {
-                            const { Content } = await render(project);
-                            return (
-                                <TerminalCard
-                                    title={project.data.title}
-                                    description={project.data.description ?? ''}
-                                    icon={project.data.icon}
-                                    url={project.data.url}
-                                >
-                                    <Content />
-                                </TerminalCard>
-                            );
-                        })}
-                    </div>
-                </TerminalLayout>
-            </main>
-        </TerminalWindow>
-    </body>
+	<head>
+		<BaseHead title={`Projects | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Bar />
+		<TerminalWindow label="Projects">
+			<main>
+				<TerminalLayout title="Projects" description="Personal projects built to solve problems I encounter.">
+					<div class="catalog-grid">
+						{projects.map(async (project) => {
+							const { Content } = await render(project);
+							return (
+								<TerminalCard
+									title={project.data.title}
+									description={project.data.description ?? ''}
+									icon={project.data.icon}
+									url={project.data.url}
+								>
+									<Content />
+								</TerminalCard>
+							);
+						})}
+					</div>
+				</TerminalLayout>
+			</main>
+		</TerminalWindow>
+	</body>
 </html>
+
+<style>
+	.catalog-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		column-gap: clamp(1.5rem, 4vw, 3.5rem);
+	}
+
+	@media (max-width: 720px) {
+		.catalog-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
