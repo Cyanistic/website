@@ -21,6 +21,7 @@ const projects = defineCollection({
     description: z.string().optional(),
     icon: z.string().optional(),
     url: z.string().optional(),
+    order: z.number().optional(),
   }),
 });
 
@@ -31,6 +32,7 @@ const software = defineCollection({
     description: z.string().optional(),
     icon: z.string().optional(),
     url: z.string().optional(),
+    order: z.number().optional(),
   }),
 });
 

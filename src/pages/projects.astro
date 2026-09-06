@@ -7,7 +7,9 @@ import TerminalLayout from '../components/TerminalLayout.astro';
 import TerminalWindow from '../components/TerminalWindow.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const projects = await getCollection('projects');
+const projects = (await getCollection('projects')).sort(
+	(a, b) => (a.data.order ?? 999) - (b.data.order ?? 999) || a.data.title.localeCompare(b.data.title),
+);
 ---
 
 <!doctype html>
