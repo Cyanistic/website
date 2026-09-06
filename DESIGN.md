@@ -80,21 +80,25 @@ Current route, selected content, visual emphasis, and keyboard focus are differe
 
 Preserve the recognizable character of Cyan's Eww bar:
 
-- a compact rounded capsule;
+- a compact rounded capsule, fully solid (`#0f0f17`), never glass;
+- 3px border and roughly 48–50px height;
 - angled divisions between module groups;
-- clear active state;
+- icons at real Eww visual weight, not 19px website glyphs;
 - tightly grouped controls;
-- restrained reveal of supplementary information.
+- clear active state;
+- names as a tooltip overlay, not a growing button.
+
+The whole capsule is opaque. Left and right clusters sit on that solid bar. Do not leave a translucent hole in the middle for the site title.
 
 Translate its contents to the web. Workspace modules are icons that link to routes, matching Cyan's real bar and the current site on `main`. Other modules can link to real destinations such as GitHub or RSS. Do not reproduce Wi-Fi, memory, volume, cryptocurrency, or other computer-only readings.
 
-Do not label workspaces with numbers and always-visible text. The icon is the control. The name appears on hover and on keyboard focus, as an Eww-style reveal, not a native browser tooltip. Every link still has an accessible name. On touch layouts, where hover does not exist, show the name without requiring a pointer. The current section stays identifiable on nested routes such as individual articles.
+The icon is the control. It does not scale, translate, or reflow on hover. The name appears as an overlay tooltip on hover and keyboard focus, like an Eww revealer sitting on top of the bar. Native `title` tooltips are not enough. Every link still has an accessible name. On touch layouts, where hover does not exist, show the name without requiring a pointer. The current section stays identifiable on nested routes such as individual articles.
 
 ### Surfaces and boundaries
 
-Use dark Foot-derived glass over the wallpaper. Content regions sit at roughly 80% opacity with backdrop blur, so the wallpaper glows through the tiles the way Hyprland windows do. The bar may stay more solid, matching the real Eww bar.
+Use dark Foot-derived glass over the wallpaper. Content regions sit at roughly 80% opacity with backdrop blur, so the wallpaper glows through the tiles the way Hyprland windows do. The bar is not glass. It is a solid Eww capsule.
 
-Regions are titleless. They tessellate the space under the bar the way Dwindle tiles do: leftover area is absorbed by the tiles, not left as empty document around them. They share narrow seams rather than sitting as unrelated cards.
+Regions have no fake window title bars. They still have real typographic hierarchy: a title can pop against body text, in the site's mono/cyan language, at compact terminal scale — not landing-page display type. Tiles tessellate the space under the bar the way Dwindle tiles do: leftover area is absorbed by the tiles, not left as empty document around them. They share narrow seams rather than sitting as unrelated cards.
 
 Inactive boundaries recede. Keyboard focus is precise and clearly visible. A focused containing region may echo Cyan's cyan-to-pale-blue active border, but the control itself still needs its own focus indicator.
 
@@ -102,7 +106,9 @@ Rounded forms belong to the system, but content regions should not become generi
 
 ### Typography
 
-JetBrains Mono carries navigation, metadata, configuration, code, and compact interface text. Remove the current page-wide semibold treatment.
+JetBrains Mono carries navigation, metadata, configuration, code, titles, and compact interface text. Remove the current page-wide semibold treatment.
+
+A title should read as the title: clearer, brighter, or slightly larger than the body. It should still feel like Foot or Eww, not a marketing hero. Homepage identity is a short intro, not a 50px poster heading.
 
 Long-form reading typography remains an explicit prototype comparison: regular-weight JetBrains Mono versus Atkinson for prose. Reading comfort decides; neither choice may erase the site's terminal-native identity.
 
@@ -128,7 +134,13 @@ The desktop uses 3px inner gaps, 5px outer gaps, 3px borders, 10px window roundi
 
 The page itself does not scroll. Wallpaper is fixed. Each tile fills its slot and scrolls internally, like a Hyprland window. Empty slots are a layout failure.
 
-Use motion as state feedback. Cyan's desktop favors quick slides, fades, and slight overshoot. Browser motion should stay restrained, avoid moving whole reading surfaces without purpose, and respect `prefers-reduced-motion`.
+The outer gap exists on all four sides, including the bottom. Hyprland `gaps_out` is 5px around the whole cluster. You must see the full rounded bottom stroke of every tile, plus a strip of wallpaper under it. If the bottom border is clipped by the viewport, `100vh`/`overflow: hidden`, or a parent, that is a layout bug.
+
+Glass uses a sharper blur (near Hyprland size 5, not a 16px smear) and no per-tile drop shadow. Inactive borders recede to a quiet grey. Only the focused region gets the cyan-to-pale-blue edge.
+
+Use motion as state feedback. Cyan's desktop favors quick slides, fades, and slight overshoot (Eww revealers are about 350ms). Animate the tooltip overlay and focus/active color. Do not animate the icon's size or the bar's layout.
+
+Honor `prefers-reduced-motion` by dropping those transitions. The tooltip must still appear on hover and focus with no motion. If a machine has Reduce Motion on, the site will look static on purpose — that is not a missing animation system.
 
 Wallpaper supports the atmosphere. The visual system must still feel specific when the wallpaper is temporarily removed.
 
@@ -144,9 +156,9 @@ Consistency comes from the bar, surfaces, typography, boundaries, focus, and mot
 
 ### Home
 
-Identify Cyan briefly, then show one substantial artifact. A recommended composition places one dominant artifact beside two supporting regions for writing and environment context. Compare this Dwindle composition with a simpler editorial control before approval.
+Identify Cyan briefly, then show one substantial artifact. The homepage is a Dwindle workspace: one dominant artifact beside two supporting regions for writing and environment context.
 
-On desktop, the homepage is one locked workspace under the bar. Tiles fill the remaining viewport. If a region has more content than its slot, that region scrolls. The document around the tiles does not.
+On desktop, that workspace is locked under the bar. Tiles fill the remaining viewport. If a region has more content than its slot, that region scrolls. The document around the tiles does not.
 
 ### Projects
 
@@ -176,7 +188,7 @@ Keep this route stable, direct, and restrained. Payment methods, addresses, owne
 
 The initial approved vocabulary is small:
 
-1. **Workspace navigation:** icon route links with a stable current-section marker. Names reveal on hover and focus.
+1. **Workspace navigation:** icon route links with a stable current-section marker. Names appear as overlay tooltips on hover and focus. Icons do not grow.
 2. **Precise focus:** clear control focus, with an optional containing-region response.
 3. **Useful disclosure:** explicit controls reveal supporting information. Hover and focus can preview the reveal, but touch and keyboard retain the same outcome.
 4. **Restrained continuity:** small state or route transitions can echo workspace switching.
@@ -202,17 +214,14 @@ Density comes from removing redundant chrome, not shrinking content.
 
 The next design prototype covers two existing surfaces:
 
-1. the homepage, at desktop and mobile sizes;
+1. the homepage as one Dwindle workspace, at desktop and mobile sizes;
 2. the existing Irys article as a contrasting reading surface.
 
-The homepage compares identical temporary content in two compositions:
+Do not add an `/editorial` route. That was an internal A/B page, not a site URL.
 
-- a dominant artifact beside two supporting Dwindle regions that fill the leftover workspace;
-- a single editorial tile that still fills the workspace and scrolls internally.
+The homepage uses glass tiles, a solid icon bar, overlay tooltips, and inner scrolling. The prototype includes working navigation, current-section behavior, focus states, reduced motion, and at most one useful disclosure. It introduces no new dependency, route, content model, persistence, or general pane system. Prototype-only links and design-brief sentences do not appear in the composition.
 
-Both compositions use glass tiles, icon workspace navigation, and inner scrolling. The prototype includes working navigation, current-section behavior, focus states, reduced motion, and at most one useful disclosure. It introduces no new dependency, route, content model, persistence, or general pane system.
-
-The lead artifact is deferred. Existing project logos may stand in as clearly temporary markers. Taggy's current repository screenshot is not approved as the homepage lead.
+The lead artifact is deferred. Existing project logos may stand in as small temporary markers. They must not dominate a tile. Taggy's current repository screenshot is not approved as the homepage lead.
 
 ## Acceptance tests
 
@@ -238,7 +247,6 @@ Reject or simplify the direction when:
 ## Open decisions
 
 - The final homepage lead artifact and any new capture
-- The winning homepage composition
 - Long-form article typography
 - The final set of website-native Eww modules
 - Whether a later content task earns pane manipulation
