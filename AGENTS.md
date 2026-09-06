@@ -10,9 +10,10 @@ Cyanistic's Home is Cyan's personal website for sharing his work, interests, and
 
 ## Visual direction
 
-- Preserve the spirit of a personal Hyprland workspace and terminal, not the current implementation of that metaphor.
-- Upgrade the execution through deliberate hierarchy, coherence, restraint, and detail. More decoration is not automatically better design.
-- Use the desktop metaphor as visual language. Keep content and navigation direct instead of simulating an operating system.
+- Before planning or changing frontend design, read `DESIGN.md`. It is the current visual decision record. Research reports and prototype branches are evidence, not approved direction.
+- Translate Cyan's actual Hyprland, Eww, and Foot design grammar into honest website functions. Do not substitute a generic terminal, dashboard, or bento-portfolio aesthetic.
+- Treat the current implementation as a useful reference rather than a fixed template. Upgrade it through deliberate hierarchy, coherence, restraint, and detail.
+- Keep content and navigation direct. A desktop-inspired control must perform a real website task; playful behavior supports exploration instead of simulating an operating system.
 - For design choices, show concrete alternatives, recommend one, and iterate from Cyan's reactions. Do not require Cyan to translate abstract design vocabulary into a solution.
 
 ## Accessibility and completion
