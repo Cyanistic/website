@@ -51,21 +51,51 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	.about-layout {
 		display: grid;
 		grid-template-columns: 116px minmax(0, 1fr);
+		align-items: start;
 		gap: clamp(1.5rem, 4vw, 3rem);
 		max-width: 78ch;
 		margin: 0 auto;
 	}
 
-	.photo-link,
-	.photo-link img {
+	.photo-link {
+		position: relative;
 		display: block;
+		width: 116px;
+		height: 116px;
+		overflow: hidden;
+		border-radius: 10px;
 	}
 
 	.photo-link img {
-		width: 116px;
-		height: 116px;
-		border: 2px solid var(--boundary);
-		border-radius: 10px;
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.photo-link::after {
+		position: absolute;
+		z-index: 1;
+		inset: 0;
+		border-radius: inherit;
+		padding: 3px;
+		background: var(--boundary);
+		content: "";
+		pointer-events: none;
+		-webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+		mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		transition: background 350ms cubic-bezier(0.16, 0.35, 0, 1.15);
+	}
+
+	.photo-link:hover::after,
+	.photo-link:focus-visible::after {
+		background: linear-gradient(135deg, var(--selected), var(--focus-companion));
+	}
+
+	.photo-link:focus-visible {
+		outline: none;
 	}
 
 	h1 {
@@ -93,7 +123,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		}
 
 		.photo-link {
-			width: max-content;
+			width: 116px;
 		}
 	}
 </style>
