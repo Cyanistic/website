@@ -1,84 +1,46 @@
 ---
 import { getCollection } from 'astro:content';
-import TerminalLayout from '../../components/TerminalLayout.astro';
-import TerminalCard from '../../components/TerminalCard.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import BaseHead from '../../components/BaseHead.astro';
 import Bar from '../../components/Bar.astro';
+import TerminalCard from '../../components/TerminalCard.astro';
+import TerminalLayout from '../../components/TerminalLayout.astro';
 import TerminalWindow from '../../components/TerminalWindow.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
 <!doctype html>
 <html lang="en">
-    <head>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-        <style>
-            .card-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1em;
-                align-items: stretch;
-            }
-            .card-grid .card-wrapper {
-                display: flex;
-            }
-            .card-grid .card-wrapper {
-                opacity: 0;
-                filter: blur(5px);
-                transform: translateX(-100%);
-                transition: all 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-            }
-            .card-grid .card-wrapper:nth-child(even) {
-                transform: translateX(100%);
-            }
-            .card-grid .card-wrapper.show {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateX(0);
-            }
-            @media (max-width: 700px) {
-                .card-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
-        </style>
-        <script defer='true' is:inline>
-            function initScrollAnimations() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('show');
-                        }
-                    });
-                });
-                document.querySelectorAll('.card-wrapper').forEach(el => observer.observe(el));
-            }
-            initScrollAnimations();
-            document.addEventListener('astro:page-load', initScrollAnimations);
-        </script>
-    </head>
-    <body>
-        <Bar title={SITE_TITLE} />
-        <TerminalWindow>
-            <main transition:animate="fade">
-                <TerminalLayout title="Blog" description="Writing about things I learn and care about.">
-                    <div class="card-grid">
-                        {posts.map((post) => (
-                            <TerminalCard
-                                title={post.data.title}
-                                description={post.data.description}
-                                date={post.data.pubDate.toLocaleDateString()}
-                                url={`/blog/${post.id}/`}
-                                showHint={false}
-                            />
-                        ))}
-                    </div>
-                </TerminalLayout>
-            </main>
-        </TerminalWindow>
-    </body>
+	<head>
+		<BaseHead title={`Writing | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Bar />
+		<TerminalWindow label="Writing">
+			<main>
+				<TerminalLayout title="Writing" description="Notes on Rust, software, and things I care about.">
+					<div class="writing-list">
+						{posts.map((post) => (
+							<TerminalCard
+								title={post.data.title}
+								description={post.data.description}
+								date={post.data.pubDate.toLocaleDateString()}
+								url={`/blog/${post.id}/`}
+								showHint={false}
+							/>
+						))}
+					</div>
+				</TerminalLayout>
+			</main>
+		</TerminalWindow>
+	</body>
 </html>
+
+<style>
+	.writing-list {
+		max-width: 78ch;
+	}
+</style>

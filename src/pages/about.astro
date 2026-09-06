@@ -1,149 +1,99 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
-
+import BaseHead from '../components/BaseHead.astro';
 import TerminalWindow from '../components/TerminalWindow.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
 <html lang="en">
-    <head>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-        <style>
-            .about-layout {
-                display: flex;
-                gap: 2em;
-                align-items: flex-start;
-                padding: 0 1em 1em;
-            }
-            .about-photo {
-                flex-shrink: 0;
-                width: 120px;
-                height: 120px;
-                border-radius: 50%;
-                border: 2px solid var(--white);
-            }
-            .about-photo:hover {
-                scale: 1.05;
-                transition: scale 0.3s ease;
-            }
-            .about-content {
-                flex: 1;
-            }
-            .about-name {
-                color: var(--selected);
-                font-size: 1.5em;
-                margin: 0 0 1em;
-                display: flex;
-                align-items: center;
-                gap: 0.5em;
-            }
-            .about-name .cursor {
-                display: inline-block;
-                color: var(--selected);
-                font-size: 1.1em;
-                animation: blink 1s step-end infinite;
-            }
-            @keyframes blink {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0; }
-            }
-            .about-section {
-                margin-bottom: 1.5em;
-                opacity: 0;
-                filter: blur(5px);
-                transform: translateX(-100%);
-                transition: all 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-            }
-            .about-section:nth-child(even) {
-                transform: translateX(100%);
-            }
-            .about-section.show {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateX(0);
-            }
-            .about-section h3 {
-                color: var(--default);
-                font-size: 1em;
-                margin: 0 0 0.5em;
-                padding-bottom: 0.3em;
-                border-bottom: 1px solid rgba(var(--default), 30%);
-            }
-            .about-section p {
-                color: rgb(var(--white));
-                font-size: 0.9em;
-                line-height: 1.6;
-                margin: 0;
-            }
-            .about-section a {
-                color: var(--selected);
-            }
-            @media (max-width: 600px) {
-                .about-layout {
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                }
-            }
-        </style>
-        <script defer='true' is:inline>
-            function initScrollAnimations() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('show');
-                        }
-                    });
-                });
-                document.querySelectorAll('.about-section').forEach(el => observer.observe(el));
-            }
-            initScrollAnimations();
-            document.addEventListener('astro:page-load', initScrollAnimations);
-        </script>
-    </head>
-    <body>
-        <Bar title={SITE_TITLE} />
-        <TerminalWindow>
-            <main transition:animate="fade">
-                <div class="about-layout">
-                    <a href="https://github.com/Cyanistic">
-                        <img class="about-photo" src="/me.png" alt="Cyanistic" />
-                    </a>
-                    <div class="about-content">
-                        <h1 class="about-name">Cyanistic<span class="cursor">█</span></h1>
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Bar />
+		<TerminalWindow label="About Cyan">
+			<main>
+				<div class="about-layout">
+					<a class="photo-link" href="https://github.com/Cyanistic" aria-label="Cyanistic on GitHub">
+						<img src="/me.png" alt="Cyanistic" width="116" height="116" />
+					</a>
+					<article>
+						<h1>Cyanistic</h1>
 
-                        <div class="about-section">
-                            <h3>Background</h3>
-                            <p>
-                                Software engineer and tech enthusiast living in the US. Graduated Summa Cum Laude from Florida International University with a B.S. in Computer Science.
-                            </p>
-                        </div>
+						<section>
+							<h2>Background</h2>
+							<p>Software engineer and tech enthusiast living in the US. Graduated Summa Cum Laude from Florida International University with a B.S. in Computer Science.</p>
+						</section>
 
-                        <div class="about-section">
-                            <h3>Work</h3>
-                            <p>
-                                Passionate about building platform infrastructure: tools that let other engineers move faster and make fewer mistakes. When it comes to programming, Rust is my language of choice — the memory safety features and concise syntax make it a breeze to write clean, efficient code.
-                            </p>
-                        </div>
+						<section>
+							<h2>Work</h2>
+							<p>Passionate about building platform infrastructure: tools that let other engineers move faster and make fewer mistakes. When it comes to programming, Rust is my language of choice. The memory safety features and concise syntax make it a breeze to write clean, efficient code.</p>
+						</section>
 
-                        <div class="about-section">
-                            <h3>Skills</h3>
-                            <p>
-                                Primary: Rust. Also proficient in JavaScript, TypeScript, and Python. Always looking to expand my skill set and learn new technologies.
-                            </p>
-                        </div>
+						<section>
+							<h2>Skills</h2>
+							<p>Primary: Rust. Also proficient in JavaScript, TypeScript, and Python. Always looking to expand my skill set and learn new technologies.</p>
+						</section>
 
-                        <div class="about-section">
-                            <h3>Interests</h3>
-                            <p>
-                                Gaming on my Linux machine (Beat Saber, strategy games). Hyprland power user. Big fan of free and open-source software — I believe software should be free and open to everyone.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </TerminalWindow>
-    </body>
+						<section>
+							<h2>Interests</h2>
+							<p>Gaming on my Linux machine (Beat Saber, strategy games). Hyprland power user. Big fan of free and open-source software. I believe software should be free and open to everyone.</p>
+						</section>
+					</article>
+				</div>
+			</main>
+		</TerminalWindow>
+	</body>
 </html>
+
+<style>
+	.about-layout {
+		display: grid;
+		grid-template-columns: 116px minmax(0, 1fr);
+		gap: clamp(1.5rem, 4vw, 3rem);
+		max-width: 78ch;
+		margin: 0 auto;
+	}
+
+	.photo-link,
+	.photo-link img {
+		display: block;
+	}
+
+	.photo-link img {
+		width: 116px;
+		height: 116px;
+		border: 2px solid var(--boundary);
+		border-radius: 10px;
+	}
+
+	h1 {
+		margin-bottom: 1.5rem;
+	}
+
+	section {
+		padding: 1.15rem 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	section h2 {
+		margin-bottom: 0.5rem;
+		font-size: 1.05rem;
+	}
+
+	section p {
+		margin: 0;
+		color: var(--text-muted);
+	}
+
+	@media (max-width: 620px) {
+		.about-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.photo-link {
+			width: max-content;
+		}
+	}
+</style>

@@ -1,149 +1,132 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
+import BaseHead from '../components/BaseHead.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TerminalWindow from '../components/TerminalWindow.astro';
-import CodeBlock from '../components/CodeBlock.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
+<!doctype html>
 <html lang="en">
-    <head>
-        <BaseHead title={title} description={description} />
-        <style>
-            .hero-image {
-                width: 100%;
-            }
-            .hero-image img {
-                display: block;
-                margin: 0 auto;
-                border-radius: 12px;
-                box-shadow: var(--box-shadow);
-            }
-            .prose {
-                max-width: calc(100% - 2em);
-                margin: auto;
-                padding: 1em;
-                color: rgb(var(--white));
-                line-height: 1.7;
-            }
-            .prose h1,
-            .prose h2,
-            .prose h3,
-            .prose h4 {
-                color: var(--selected);
-                margin-top: 1.5em;
-            }
-            .prose h1 {
-                font-size: 1.8em;
-            }
-            .prose h2 {
-                font-size: 1.4em;
-                border-bottom: 1px solid var(--default);
-                padding-bottom: 0.3em;
-            }
-            .prose h3 {
-                font-size: 1.1em;
-            }
-            .prose p {
-                margin-bottom: 1.2em;
-            }
-            .prose ul,
-            .prose ol {
-                margin-bottom: 1.2em;
-                padding-left: 1.5em;
-            }
-            .prose li {
-                margin-bottom: 0.4em;
-            }
-            .prose a {
-                color: var(--selected);
-                text-decoration: underline;
-            }
-            .prose a:hover {
-                color: var(--default);
-            }
-            .prose blockquote {
-                border-left: 3px solid var(--selected);
-                padding: 0.8em 1em;
-                margin: 1.2em 0;
-                background: rgba(var(--white), 3%);
-                border-radius: 0 8px 8px 0;
-            }
-            .prose blockquote p {
-                margin: 0;
-                color: rgb(var(--white));
-            }
-            .title {
-                margin-bottom: 1em;
-                padding: 1em 0;
-                text-align: center;
-                line-height: 1;
-            }
-            .title h1 {
-                margin: 0 0 0.5em 0;
-                color: var(--selected);
-            }
-            .title .date {
-                margin-bottom: 0.5em;
-                color: var(--default);
-                font-size: 0.9em;
-            }
-            .title .last-updated-on {
-                font-style: italic;
-                color: var(--default);
-            }
-            .prose hr {
-                border: none;
-                border-top: 1px solid var(--default);
-                margin: 2em 0;
-            }
-        </style>
-    </head>
-
-    <body>
-        <Bar />
-        <TerminalWindow>
-            <main>
-                <article>
-                    {heroImage && (
-                        <div class="hero-image">
-                            <img width={1020} height={510} src={heroImage} alt="" />
-                        </div>
-                    )}
-                    <div class="prose">
-                        <div class="title">
-                            <div class="date">
-                                <FormattedDate date={pubDate} />
-                                {updatedDate && (
-                                    <div class="last-updated-on">
-                                        Last updated on <FormattedDate date={updatedDate} />
-                                    </div>
-                                )}
-                            </div>
-                            <h1>{title} <span class="cursor">█</span></h1>
-                            <hr />
-                        </div>
-                        <slot />
-                    </div>
-                </article>
-            </main>
-        </TerminalWindow>
-    </body>
+	<head>
+		<BaseHead title={title} description={description} image={heroImage} />
+	</head>
+	<body>
+		<Bar />
+		<TerminalWindow label={`Article: ${title}`} showFooter={false}>
+			<main class="article-main">
+				<article>
+					{heroImage && (
+						<img class="hero-image" width="1020" height="510" src={heroImage} alt="" />
+					)}
+					<header class="article-header">
+						<p class="date">
+							<FormattedDate date={pubDate} />
+							{updatedDate && <span>Updated <FormattedDate date={updatedDate} /></span>}
+						</p>
+						<h1>{title}</h1>
+						<p class="dek">{description}</p>
+					</header>
+					<div class="prose"><slot /></div>
+				</article>
+			</main>
+		</TerminalWindow>
+	</body>
 </html>
 
 <style>
-    .cursor {
-        display: inline-block;
-        color: var(--selected);
-        animation: blink 1s step-end infinite;
-    }
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
+	.article-main {
+		width: min(100%, 80ch);
+		padding-block: clamp(1.3rem, 3vw, 2.7rem) 3rem;
+	}
+
+	article {
+		width: 100%;
+	}
+
+	.hero-image {
+		display: block;
+		width: 100%;
+		margin-bottom: 1.8rem;
+		border-radius: 7px;
+	}
+
+	.article-header {
+		margin-bottom: 2rem;
+		padding-bottom: 1.35rem;
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.date {
+		display: flex;
+		gap: 1rem;
+		margin: 0 0 0.65rem;
+		color: var(--green);
+		font-size: 0.78rem;
+	}
+
+	h1 {
+		margin-bottom: 0.75rem;
+		font-size: clamp(1.55rem, 3.4vw, 2.35rem);
+		line-height: 1.18;
+	}
+
+	.dek {
+		margin: 0;
+		color: var(--text-muted);
+		font-size: 0.95rem;
+	}
+
+	.prose {
+		color: var(--text);
+		font-size: 1rem;
+		line-height: 1.75;
+	}
+
+	.prose :global(h2) {
+		margin-top: 2.6rem;
+		margin-bottom: 0.8rem;
+		font-size: 1.45rem;
+	}
+
+	.prose :global(h3) {
+		margin-top: 2rem;
+		margin-bottom: 0.65rem;
+		font-size: 1.16rem;
+	}
+
+	.prose :global(p),
+	.prose :global(ul),
+	.prose :global(ol) {
+		margin-top: 0;
+		margin-bottom: 1.25rem;
+	}
+
+	.prose :global(a) {
+		text-decoration: underline;
+	}
+
+	.prose :global(img) {
+		border-radius: 4px;
+	}
+
+	@media (max-width: 620px) {
+		.article-main {
+			padding: 1rem 0.95rem 2rem;
+		}
+
+		.date {
+			flex-direction: column;
+			gap: 0.15rem;
+		}
+
+		.prose {
+			font-size: 0.94rem;
+			line-height: 1.68;
+		}
+	}
 </style>
