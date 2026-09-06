@@ -141,7 +141,7 @@ body {
 
 .workspace-pane:hover::after,
 .workspace-pane:focus-visible::after,
-.workspace-pane:focus-within::after {
+.workspace-pane:has(:focus-visible)::after {
   opacity: 1;
 }
 

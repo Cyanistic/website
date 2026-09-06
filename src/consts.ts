@@ -7,7 +7,7 @@ import type {
 } from "astro";
 
 export const SITE_TITLE = "Cyanistic's Home";
-export const SITE_DESCRIPTION = "Rust tools, Hyprland, and technical writing from Cyan.";
+export const SITE_DESCRIPTION = "Mostly Linux. Too many side projects. Occasionally coherent writing.";
 
 const easingSlide: TransitionAnimationPair = {
   old: {
