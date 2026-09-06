@@ -29,11 +29,13 @@ Research and prototypes are evidence. They do not become approved direction with
 Use the desktop's relationships rather than its inventory of widgets:
 
 - compact modules with clear state;
-- uneven Dwindle-like hierarchy;
+- uneven Dwindle-like hierarchy that fills leftover space;
 - titleless content regions;
+- glass surfaces: wallpaper shows through the tiles;
 - narrow, consistent gaps;
 - quiet inactive boundaries and unmistakable focus;
 - dense information without cramped text;
+- scrolling happens inside tiles, never around them;
 - selective disclosure of supporting detail;
 - quick, responsive motion.
 
@@ -84,13 +86,15 @@ Preserve the recognizable character of Cyan's Eww bar:
 - tightly grouped controls;
 - restrained reveal of supplementary information.
 
-Translate its contents to the web. Workspace modules link to named routes. Other modules can link to real destinations such as GitHub or RSS. Do not reproduce Wi-Fi, memory, volume, cryptocurrency, or other computer-only readings.
+Translate its contents to the web. Workspace modules are icons that link to routes, matching Cyan's real bar and the current site on `main`. Other modules can link to real destinations such as GitHub or RSS. Do not reproduce Wi-Fi, memory, volume, cryptocurrency, or other computer-only readings.
 
-Essential navigation names remain visible. Icons may support meaning but cannot carry it alone. The current section stays identifiable on nested routes such as individual articles.
+Do not label workspaces with numbers and always-visible text. The icon is the control. The name appears on hover and on keyboard focus, as an Eww-style reveal, not a native browser tooltip. Every link still has an accessible name. On touch layouts, where hover does not exist, show the name without requiring a pointer. The current section stays identifiable on nested routes such as individual articles.
 
 ### Surfaces and boundaries
 
-Use dark Foot-derived surfaces over subdued wallpaper atmosphere. Content regions are titleless and share seams like a Dwindle layout rather than appearing as unrelated cards.
+Use dark Foot-derived glass over the wallpaper. Content regions sit at roughly 80% opacity with backdrop blur, so the wallpaper glows through the tiles the way Hyprland windows do. The bar may stay more solid, matching the real Eww bar.
+
+Regions are titleless. They tessellate the space under the bar the way Dwindle tiles do: leftover area is absorbed by the tiles, not left as empty document around them. They share narrow seams rather than sitting as unrelated cards.
 
 Inactive boundaries recede. Keyboard focus is precise and clearly visible. A focused containing region may echo Cyan's cyan-to-pale-blue active border, but the control itself still needs its own focus indicator.
 
@@ -120,7 +124,9 @@ These values are references, not automatic acceptance criteria. Contrast, wallpa
 
 ### Space, opacity, and motion
 
-The desktop uses 3px inner gaps, 5px outer gaps, 3px borders, 10px window rounding, and roughly 80% terminal opacity. Preserve the compact relationships, not necessarily the literal numbers.
+The desktop uses 3px inner gaps, 5px outer gaps, 3px borders, 10px window rounding, and roughly 80% terminal opacity with blur. Preserve the compact relationships, not necessarily the literal numbers. Content tiles use translucent color plus `backdrop-filter`; do not fake glass with a nearly opaque fill.
+
+The page itself does not scroll. Wallpaper is fixed. Each tile fills its slot and scrolls internally, like a Hyprland window. Empty slots are a layout failure.
 
 Use motion as state feedback. Cyan's desktop favors quick slides, fades, and slight overshoot. Browser motion should stay restrained, avoid moving whole reading surfaces without purpose, and respect `prefers-reduced-motion`.
 
@@ -140,7 +146,7 @@ Consistency comes from the bar, surfaces, typography, boundaries, focus, and mot
 
 Identify Cyan briefly, then show one substantial artifact. A recommended composition places one dominant artifact beside two supporting regions for writing and environment context. Compare this Dwindle composition with a simpler editorial control before approval.
 
-On desktop, the first screen can read as a complete workspace. Additional material continues through normal document scrolling rather than trapping the whole page inside independently scrolling windows.
+On desktop, the homepage is one locked workspace under the bar. Tiles fill the remaining viewport. If a region has more content than its slot, that region scrolls. The document around the tiles does not.
 
 ### Projects
 
@@ -156,7 +162,7 @@ Give the two existing articles enough space for their different titles, dates, a
 
 ### Article
 
-Use a quiet reading surface with controlled measure, complete code examples, and semantic headings. An outline can support a long article when useful; it should not become a permanent empty pane on short writing.
+Use a quiet reading surface with controlled measure, complete code examples, and semantic headings. The article fills the workspace under the bar and scrolls inside that surface. An outline can support a long article when useful; it should not become a permanent empty pane on short writing.
 
 ### About
 
@@ -170,7 +176,7 @@ Keep this route stable, direct, and restrained. Payment methods, addresses, owne
 
 The initial approved vocabulary is small:
 
-1. **Workspace navigation:** normal named route links with a stable current-section marker.
+1. **Workspace navigation:** icon route links with a stable current-section marker. Names reveal on hover and focus.
 2. **Precise focus:** clear control focus, with an optional containing-region response.
 3. **Useful disclosure:** explicit controls reveal supporting information. Hover and focus can preview the reveal, but touch and keyboard retain the same outcome.
 4. **Restrained continuity:** small state or route transitions can echo workspace switching.
@@ -181,11 +187,11 @@ The interface does not copy Hyprland's `follow_mouse` behavior by moving browser
 
 Mobile preserves priority and identity, not desktop geometry:
 
-- use one document scroll;
+- lock the viewport; one inner-scrolling content surface, not the page around it;
 - retain visible site identity;
-- provide a compact named workspace row;
+- keep icon workspace controls, with names available without hover;
 - place a meaningful artifact early;
-- convert desktop splits into intentional source order;
+- convert desktop splits into one stacked pane rather than several competing scrollers;
 - reduce redundant framing and exposed wallpaper;
 - keep code scrolling inside its own block;
 - use comfortable touch targets and readable text.
@@ -201,10 +207,10 @@ The next design prototype covers two existing surfaces:
 
 The homepage compares identical temporary content in two compositions:
 
-- a dominant artifact beside two supporting Dwindle regions;
-- a single editorial column with compact supporting rows.
+- a dominant artifact beside two supporting Dwindle regions that fill the leftover workspace;
+- a single editorial tile that still fills the workspace and scrolls internally.
 
-The prototype includes working navigation, current-section behavior, focus states, reduced motion, and at most one useful disclosure. It introduces no new dependency, route, content model, persistence, or general pane system.
+Both compositions use glass tiles, icon workspace navigation, and inner scrolling. The prototype includes working navigation, current-section behavior, focus states, reduced motion, and at most one useful disclosure. It introduces no new dependency, route, content model, persistence, or general pane system.
 
 The lead artifact is deferred. Existing project logos may stand in as clearly temporary markers. Taggy's current repository screenshot is not approved as the homepage lead.
 
@@ -213,7 +219,7 @@ The lead artifact is deferred. Existing project logos may stand in as clearly te
 The direction succeeds when:
 
 - a peer can identify Cyan and one concrete piece of work within ten seconds;
-- visitors can reach projects and writing without decoding icons or using special interactions;
+- visitors can reach projects and writing from the bar without guessing: hover, focus, or a touch layout reveals the name;
 - the interface still feels related to Cyan's desktop when wallpaper is hidden;
 - current section, selected content, visual priority, and keyboard focus remain distinguishable;
 - a meaningful artifact appears early at 390px;
