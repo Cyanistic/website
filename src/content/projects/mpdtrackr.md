@@ -1,5 +1,6 @@
 ---
 title: "mpdtrackr"
+order: 50
 # icon: "/mpdtrackr.png"
 url: "https://github.com/Cyanistic/mpdtrackr"
 description: "A local music listening stats tracker, your personal Spotify Wrapped but for your entire music library"

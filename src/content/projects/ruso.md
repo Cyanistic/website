@@ -1,5 +1,6 @@
 ---
 title: "ruso"
+order: 80
 description: "A cross-platform CLI and GUI application to modify osu! beatmap parameters, built because the Windows-only trainer didn't work on Linux"
 icon: "/ruso.png"
 url: "https://github.com/Cyanistic/ruso"
