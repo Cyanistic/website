@@ -1,5 +1,6 @@
 ---
 import Footer from './Footer.astro';
+import { workspaceTransition } from '../transitions';
 
 interface Props {
 	label?: string;
@@ -9,7 +10,13 @@ interface Props {
 const { label = 'Page content', showFooter = true } = Astro.props;
 ---
 
-<div class="workspace-pane" tabindex="0" aria-label={label}>
+<div
+	class="workspace-content workspace-pane"
+	transition:name="workspace-content"
+	transition:animate={workspaceTransition}
+	tabindex="0"
+	aria-label={label}
+>
 	<div class="workspace-pane-scroll">
 		<slot />
 		{showFooter && <Footer />}

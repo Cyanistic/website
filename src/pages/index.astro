@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Bar from '../components/Bar.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { workspaceTransition } from '../transitions';
 
 const projects = await getCollection('projects');
 const lokr = projects.find((project) => project.id === 'lokr');
@@ -33,6 +34,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en', {
 	<body>
 		<Bar />
 
+		<div class="workspace-content" transition:name="workspace-content" transition:animate={workspaceTransition}>
 		<main class="home-workspace" aria-label="Home workspace">
 			<section class="workspace-pane lead-pane" tabindex="0" aria-labelledby="home-title">
 				<div class="workspace-pane-scroll">
@@ -95,6 +97,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en', {
 				</div>
 			</section>
 		</main>
+		</div>
 	</body>
 </html>
 

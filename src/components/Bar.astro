@@ -1,17 +1,16 @@
 ---
 import BarLink from './BarLink.astro';
 import { SITE_TITLE } from '../consts';
+import { WORKSPACES } from '../workspaces';
 ---
 
-<header class="site-bar">
+<header class="site-bar" transition:animate="none">
 	<nav aria-label="Primary">
 		<div class="bar-cluster workspaces">
 			<div class="cluster-body">
-				<BarLink href="/" title="Home">󰋜</BarLink>
-				<BarLink href="/projects" title="Projects">󰐯</BarLink>
-				<BarLink href="/software" title="Software"></BarLink>
-				<BarLink href="/blog" title="Writing">󰂺</BarLink>
-				<BarLink href="/about" title="About">󰀄</BarLink>
+				{WORKSPACES.map(({ href, title, icon }) => (
+					<BarLink href={href} title={title}>{icon}</BarLink>
+				))}
 			</div>
 			<span class="tri" aria-hidden="true"></span>
 		</div>

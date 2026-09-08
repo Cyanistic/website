@@ -84,7 +84,7 @@ const { programs } = Astro.props;
 	<body>
 		<Bar title={SITE_TITLE} />
 		<TerminalWindow>
-		<main transition:animate="fade">
+		<main>
 			<slot />
 			{
 				programs.map(async (program: any) => {
