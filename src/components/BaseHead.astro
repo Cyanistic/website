@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title: string;
@@ -30,3 +31,29 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<ClientRouter />
+
+<script>
+	const workspaceForPath = (pathname: string) => {
+		const path = pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname;
+
+		if (path === '/') return 0;
+		if (path === '/projects') return 1;
+		if (path === '/software') return 2;
+		if (path === '/blog' || path.startsWith('/blog/')) return 3;
+		if (path === '/about') return 4;
+		return null;
+	};
+
+	document.addEventListener('astro:before-preparation', (event) => {
+		const from = workspaceForPath(event.from.pathname);
+		const to = workspaceForPath(event.to.pathname);
+
+		event.direction = from === null || to === null || from === to
+			? 'same'
+			: to > from
+				? 'forward'
+				: 'back';
+	});
+</script>

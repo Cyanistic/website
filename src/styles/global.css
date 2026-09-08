@@ -21,6 +21,7 @@
   --inner-gap: 3px;
   --bar-height: 50px;
   --window-radius: 10px;
+  --workspace-easing: cubic-bezier(0.16, 0.35, 0, 1.15);
 }
 
 @font-face {
@@ -92,6 +93,12 @@ body {
   line-height: 1.55;
   overflow-wrap: break-word;
   text-align: left;
+}
+
+.workspace-content {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 ::selection {
@@ -322,6 +329,42 @@ blockquote {
 
   main {
     padding: 1rem;
+  }
+}
+
+@keyframes workspace-leave-left {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes workspace-enter-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes workspace-leave-right {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes workspace-enter-left {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes workspace-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes workspace-fade-in {
+  from {
+    opacity: 0;
   }
 }
 
