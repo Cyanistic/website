@@ -2,6 +2,7 @@
 title: "mpv"
 order: 120
 url: "https://mpv.io/"
+icon: "/mpv.svg"
 description: "The video player. GPU output, generous volume ceiling, screenshots to ~/Pictures/mpv."
 ---
 

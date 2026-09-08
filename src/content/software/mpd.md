@@ -2,6 +2,7 @@
 title: "mpd"
 order: 110
 url: "https://www.musicpd.org/"
+icon: "/mpd.svg"
 description: "MPD serving ~/Music with replaygain and a fifo out, driven daily from ncmpcpp."
 ---
 
