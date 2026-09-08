@@ -35,25 +35,5 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <ClientRouter />
 
 <script>
-	const workspaceForPath = (pathname: string) => {
-		const path = pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname;
-
-		if (path === '/') return 0;
-		if (path === '/projects') return 1;
-		if (path === '/software') return 2;
-		if (path === '/blog' || path.startsWith('/blog/')) return 3;
-		if (path === '/about') return 4;
-		return null;
-	};
-
-	document.addEventListener('astro:before-preparation', (event) => {
-		const from = workspaceForPath(event.from.pathname);
-		const to = workspaceForPath(event.to.pathname);
-
-		event.direction = from === null || to === null || from === to
-			? 'same'
-			: to > from
-				? 'forward'
-				: 'back';
-	});
+	import '../scripts/workspace-navigation';
 </script>
