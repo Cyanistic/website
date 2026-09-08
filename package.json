@@ -3,6 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "packageManager": "pnpm@11.24.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -11,10 +14,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@astrojs/mdx": "^6.0.2",
-    "@astrojs/rss": "^4.0.18",
-    "astro": "^6.4.4",
-    "typescript": "^6.0.3"
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/mdx": "^8.0.0",
+    "@astrojs/rss": "^4.0.19",
+    "astro": "^7.2.10"
+  },
+  "devDependencies": {
+    "@typescript/native": "npm:typescript@7.0.2",
+    "typescript": "npm:@typescript/typescript6@6.0.2"
   }
 }
